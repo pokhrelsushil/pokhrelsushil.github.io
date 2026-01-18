@@ -9,26 +9,21 @@ const coreAITexts = [
   {
     title: "Artificial Intelligence: A Modern Approach",
     author: "Stuart Russell, Peter Norvig",
-    url: "",
+    url: "https://api.pageplace.de/preview/DT0400.9781292401171_A41586057/preview-9781292401171_A41586057.pdf",
     note: "",
   },
   {
     title: "Deep Learning",
     author: "Ian Goodfellow, Yoshua Bengio, Aaron Courville",
-    url: "",
-    note: "",
   },
   {
     title: "Pattern Recognition and Machine Learning",
     author: "Christopher M. Bishop",
-    url: "",
-    note: "",
   },
   {
     title: "Reinforcement Learning: An Introduction",
     author: "Richard S. Sutton, Andrew G. Barto",
-    url: "",
-    note: "",
+
   },
 ];
 
