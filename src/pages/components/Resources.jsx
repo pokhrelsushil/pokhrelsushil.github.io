@@ -29,13 +29,11 @@ const coreAITexts = [
 
 /* Currently Reading (middle column) */
 const currentlyReading = [
-  { title: "How to Solve It", author: "George Pólya", url: "", note: "" },
-  { title: "Human Compatible", author: "Stuart Russell", url: "", note: "" },
+  { title: "How to Solve It", author: "George Pólya", url: "https://www.amazon.ca/How-Solve-Aspect-Mathematical-Method/dp/069116407X/ref=sr_1_1?adgrpid=1364494158738399&dib=eyJ2IjoiMSJ9.goZZRchd1sbK1R1g0l_TyhEv5m25JhxuZwSvQ-R5tg0s0La5Jz1snmLNwC8x8YHNkE7dkSnPMAqUkBiCk4UIa8VP7flI443VSsSYRdKjqD3gp5chpntOJXdNbPi07jli.BmLwfI2km8ol0Hb-sOzPEKzEkvp2aVSMKm94ZtD72pE&dib_tag=se&hvadid=85281424708044&hvbmt=be&hvdev=c&hvlocphy=5230&hvnetw=o&hvqmt=e&hvtargid=kwd-85281054172516%3Aloc-32&hydadcr=22463_13498400&keywords=george+polya+how+to+solve+it&mcid=e50910ab3722366291c49c5a084d8d02&msclkid=8e217358106718ba36841a344f8d2fcf&qid=1768710130&sr=8-1", note: "" },
+  { title: "Human Compatible", author: "Stuart Russell"},
   {
     title: "Think, Play, Do: Technology, Innovation, and Organization",
     author: "Mark Dodgson",
-    url: "",
-    note: "",
   },
 ];
 
@@ -44,30 +42,27 @@ const favouriteRead = [
   {
     title: "Agent-Based and Individual-Based Modeling: A Practical Introduction",
     author: "Steven F. Railsback, Volker Grimm",
-    url: "",
+    url: "https://www.jstor.org/stable/j.ctt7sns7",
     note: "",
   },
-  { title: "Atlas of AI", author: "Kate Crawford", url: "", note: "" },
-  { title: "Brave New World", author: "Aldous Huxley", url: "", note: "" },
+  { title: "Atlas of AI", author: "Kate Crawford", },
+  { title: "Brave New World", author: "Aldous Huxley",},
   {
     title: "Crime and Punishment",
     author: "Fyodor Dostoevsky",
-    url: "",
-    note: "",
+    
   },
   {
     title: "Discipline and Punish",
     author: "Michel Foucault",
-    url: "",
-    note: "",
+   
   },
   {
     title: "Evolutionary Intelligence",
     author: "Rolf Pfeifer, Josh Bongard",
-    url: "",
-    note: "",
+    
   },
-  { title: "Getting to Yes", author: "Roger Fisher, William Ury", url: "", note: "" },
+  { title: "Getting to Yes", author: "Roger Fisher, William Ury" },
 ];
 
 /* Control Systems: Crash-Course (course names only, as requested) */
@@ -133,33 +128,32 @@ const gameTheoreticReading = [
     title:
       "Multiagent Systems: Algorithmic, Game-Theoretic, and Logical Foundations",
     author: "Yoav Shoham, Kevin Leyton-Brown",
-    note: "Freely available (official site).",
+  
     url: "https://www.masfoundations.org/download.html",
   },
   {
     title: "Algorithmic Game Theory",
     author:
       "Noam Nisan, Tim Roughgarden, Éva Tardos, Vijay V. Vazirani (eds.)",
-    note: "Publisher page (may require institutional access).",
+    note: "Publisher page ",
     url: "https://www.cambridge.org/core/books/algorithmic-game-theory/0092C07CA8B724E1B1BE2238DDD66B38",
   },
   {
     title: "Twenty Lectures on Algorithmic Game Theory",
     author: "Tim Roughgarden",
-    note: "Publisher page (not generally free).",
+    note: "Publisher page (not free).",
     url: "https://www.cambridge.org/core/books/twenty-lectures-on-algorithmic-game-theory/A9D9427C8F43E7DAEF8C702755B6D72B",
   },
   {
     title: "The Theory of Learning in Games",
     author: "Drew Fudenberg, David K. Levine",
-    note: "Publisher page (not generally free).",
+    note: "Publisher page ( not free).",
     url: "https://mitpress.mit.edu/9780262061940/the-theory-of-learning-in-games/",
   },
   {
     title: "Game Theory",
-    author: "(Add your preferred author/edition)",
-    note: "Optional reference — add your preferred edition and link.",
-    url: "",
+    author: "(Pokhrel et all )",
+    
   },
   {
     title: "A Course in Game Theory",
@@ -175,11 +169,145 @@ const portalBlocks = [
     title: "Important GitHub Repositories",
     items: [
       { label: "Control Systems Repo ", url: "" },
-      { label: "Robotics Repo ", url: "" },
-      { label: "Optimization Repo ", url: "" },
-      { label: "Game Theory Repo ", url: "" },
-      { label: "Misc Research Tools ", url: "" },
+      { label: "Robotics Repo "},
+      { label: "Optimization Repo"},
+      { label: "Game Theory Repo "},
+      { label: "Misc Research Tools " },
     ],
+  },
+  //const roboticsOpenSourceProjects = [
+  {
+    title: "Hugging Face Robotics Course (LeRobot)",
+    type: "Course",
+    links: [
+      { label: "Course page", url: "https://huggingface.co/learn/robotics" },
+      { label: "GitHub (LeRobot)", url: "" }, // add if you want a specific repo link
+    ],
+    tags: ["learning", "robotics"],
+  },
+  {
+    title: "Open Robotics Hardware Hub",
+    type: "Hardware directory",
+    links: [{ label: "Website", url: "https://openrobhardware.org" }],
+    tags: ["hardware", "open-source"],
+  },
+  {
+    title: "ROSbot 2.0 (Husarion)",
+    type: "Mobile robot platform",
+    links: [{ label: "Website", url: "https://husarion.com" }],
+    tags: ["ROS", "mobile-robot"],
+  },
+  {
+    title: "Magni (Ubiquity Robotics)",
+    type: "Mobile base",
+    links: [{ label: "Website", url: "https://ubiquityrobotics.com" }],
+    tags: ["mobile-robot"],
+  },
+  {
+    title: "Stanford Doggo",
+    type: "Quadruped",
+    links: [{ label: "GitHub", url: "https://github.com/Nate711/StanfordDoggoProject" }],
+    tags: ["legged", "locomotion"],
+  },
+  {
+    title: "ANYmal (ANYbotics)",
+    type: "Quadruped (research/industrial)",
+    links: [{ label: "GitHub org", url: "https://github.com/ANYbotics" }],
+    tags: ["legged", "inspection"],
+  },
+  {
+    title: "JPL Open Source Rover (NASA JPL)",
+    type: "Rover",
+    links: [{ label: "GitHub", url: "https://github.com/nasa-jpl/open-source-rover" }],
+    tags: ["rover", "hardware"],
+  },
+  {
+    title: "MuSHR",
+    type: "Autonomous race car",
+    links: [{ label: "Project site", url: "https://mushr.io" }],
+    tags: ["autonomy", "perception"],
+  },
+  {
+    title: "AWS DeepRacer",
+    type: "RL race car",
+    links: [{ label: "Website", url: "https://aws.amazon.com/deepracer/" }],
+    tags: ["reinforcement-learning"],
+  },
+  {
+    title: "OpenManipulator (ROBOTIS)",
+    type: "Robotic arm",
+    links: [
+      {
+        label: "Docs",
+        url: "https://emanual.robotis.com/docs/en/platform/openmanipulator/",
+      },
+    ],
+    tags: ["manipulation", "arm"],
+  },
+  {
+    title: "Niryo One",
+    type: "Robotic arm (3D-printed)",
+    links: [{ label: "Website", url: "https://niryo.com" }],
+    tags: ["manipulation", "arm"],
+  },
+  {
+    title: "Poppy Project",
+    type: "Humanoid / modular robots",
+    links: [{ label: "Website", url: "https://www.poppy-project.org" }],
+    tags: ["humanoid", "education"],
+  },
+  {
+    title: "OpenBionics",
+    type: "Bionics / prosthetics",
+    links: [{ label: "Website", url: "https://openbionics.org" }],
+    tags: ["prosthetics"],
+  },
+  {
+    title: "Nybble (Petoi)",
+    type: "Robotic cat",
+    links: [{ label: "Website", url: "https://www.petoi.com" }],
+    tags: ["locomotion"],
+  },
+  {
+    title: "TriFinger",
+    type: "Dexterous manipulation benchmark",
+    links: [{ label: "Project page", url: "https://sites.google.com/view/trifinger" }],
+    tags: ["manipulation", "benchmark"],
+  },
+  {
+    title: "Open Dynamic Robot Initiative",
+    type: "Torque-controlled modular robotics",
+    links: [
+      {
+        label: "Project site",
+        url: "https://en-dynamic-robot-initiative.github.io",
+      },
+    ],
+    tags: ["legged", "torque-control"],
+  },
+  {
+    title: "Universal Robots ROS 2 Driver",
+    type: "ROS 2 driver (industrial arms)",
+    links: [{ label: "GitHub", url: "https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver" }],
+    tags: ["ROS2", "industrial"],
+  },
+  {
+    title: "Autoware Foundation",
+    type: "Autonomy stack",
+    links: [{ label: "GitHub org", url: "https://github.com/autowarefoundation" }],
+    tags: ["autonomy", "self-driving"],
+  },
+  {
+    title: "Duckietown",
+    type: "Education ecosystem",
+    links: [{ label: "Website", url: "https://duckietown.com" }],
+    tags: ["education", "autonomy"],
+  },
+  {
+    title: "PythonRobotics",
+    type: "Algorithms collection",
+    links: [{ label: "Project site", url: "https://atsushisakai.github.io/PythonRobotics/" }],
+    tags: ["algorithms", "python"],
   },
   {
     title: "Important Links (Portal / Notes / Courses)",
