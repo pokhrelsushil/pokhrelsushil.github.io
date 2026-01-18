@@ -360,7 +360,8 @@ const Resources = () => {
         </ColumnCard>
 
         {/* Information theory textbook (from your posted reference) */}
-        <ColumnCard id="info-theory" title="Textbook and References: Information Theory">
+        <ColumnCard id="info-theory" title="Textbook and References: 
+        //Information Theory">
           {informationTheoryTextbook.map((item, idx) => (
             <React.Fragment key={item.title}>
               <BookItem item={item} />
