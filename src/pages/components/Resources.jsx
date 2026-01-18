@@ -360,8 +360,7 @@ const Resources = () => {
         </ColumnCard>
 
         {/* Information theory textbook (from your posted reference) */}
-        <ColumnCard id="info-theory" title="Textbook and References: 
-        //Information Theory">
+        <ColumnCard id="info-theory" title="Textbook and References:">
           {informationTheoryTextbook.map((item, idx) => (
             <React.Fragment key={item.title}>
               <BookItem item={item} />
@@ -371,7 +370,7 @@ const Resources = () => {
         </ColumnCard>
 
         {/* Optimization reading */}
-        <ColumnCard id="optimization" title="Optimization Problems: Reading (with Links)">
+        <ColumnCard id="optimization" title="Optimization Problems: Reading ">
           {optimizationReading.map((item, idx) => (
             <React.Fragment key={item.title}>
               <BookItem item={item} />
