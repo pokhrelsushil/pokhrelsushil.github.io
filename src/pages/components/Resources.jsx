@@ -152,7 +152,7 @@ const gameTheoreticReading = [
   },
   {
     title: "Game Theory",
-    author: "(Pokhrel et all )",
+    author: "(Pokhrel et all :) )",
     
   },
   {
@@ -163,7 +163,7 @@ const gameTheoreticReading = [
   },
 ];
 
-/* Portal blocks: GitHub and Links (placeholders you can fill) */
+/* Portal blocks: GitHub and Links  */
 const portalBlocks = [
   {
     title: "Important GitHub Repositories",
