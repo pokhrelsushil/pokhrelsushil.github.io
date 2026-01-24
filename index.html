@@ -7,13 +7,11 @@
     <title>Sushil Pokhrel</title>
 
     <script>
-      // Restore SPA route after GitHub Pages 404 redirect
       (function () {
         const params = new URLSearchParams(window.location.search);
         const p = params.get("p");
         if (p) {
           const decoded = decodeURIComponent(p);
-          // Remove the ?p=... from the URL and restore the route
           window.history.replaceState(null, "", decoded);
         }
       })();

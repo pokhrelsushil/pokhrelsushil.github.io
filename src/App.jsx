@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
@@ -13,7 +13,7 @@ import Experience from "./pages/components/Experience";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename="/"> 
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,7 +25,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
