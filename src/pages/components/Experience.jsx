@@ -65,7 +65,7 @@ const Experience = () => {
         "Mentoring undergraduate and graduate students in computer networks and security, robotics, ROS2, Webots, laboratory techniques, research methodology, and academic writing (including research questions and publication).",
       students: [
         { name: "Bharat Adhikari", detail: "Mechanical" },
-        { name: "Aryan Sharma", detail: "Chemical, Undergraduate" },
+        { name: "Aryan Sharma", detail: "ECE, Undergraduate" },
       ],
     },
   ];
