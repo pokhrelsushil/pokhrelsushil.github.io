@@ -2,10 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-   <link rel="icon" type="image/png" href="/assets/sushilpokhrel-CjTwRLYc.png" />
+    <link rel="icon" type="image/png" href="/assets/sushilpokhrel-CjTwRLYc.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sushil Pokhrel </title>
-    <script type="module" crossorigin src="/assets/index-BO-aWuLb.js"></script>
+    <title>Sushil Pokhrel</title>
+
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const p = params.get("p");
+        if (p) {
+          const decoded = decodeURIComponent(p);
+          window.history.replaceState(null, "", decoded);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-BG1Ftch4.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-X2XF-Uy0.css">
   </head>
   <body>
