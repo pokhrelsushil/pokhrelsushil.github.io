@@ -40,19 +40,34 @@ const Experience = () => {
     },
   ];
 
-  const mentoringRole = {
-    title: "Student Mentor",
-    company: "Indian Institute of Technology , IIT Roorkee ",
-    period: "September 2017 - Present",
-    location: "Roorkee, India",
-    description:
-      "Mentored undergraduate students in computational  concepts, laboratory techniques, and research methodology .",
-  };
-
-  const mentoredStudents = [
-    { name: "Abhisek Joshi", detail: "IIT Roorkee, Mechanical" },
-    { name: "Sandip Upadhaya", detail: "Computer Science" },
-    { name: "Sabina Panta", detail: "ECE, Undergraduate" },
+  // ✅ Mentoring entries (IIT Roorkee + Tribhuvan University)
+  const mentoringExperiences = [
+    {
+      title: "Student Mentor",
+      company: "Indian Institute of Technology, IIT Roorkee",
+      period: "September 2017 - Present",
+      location: "Roorkee, India",
+      description:
+        "Mentored undergraduate students in computational concepts, laboratory techniques, and research methodology.",
+      students: [
+        { name: "Abhisek Joshi", detail: "IIT Roorkee, Mechanical" },
+        { name: "Sandip Upadhaya", detail: "Computer Science" },
+        { name: "Sabina Panta", detail: "ECE, Undergraduate" },
+      ],
+    },
+    {
+      title: "Student Mentor",
+      company:
+        "Tribhuvan University, Institute of Engineering / Institute of Science and Technology",
+      period: "September 2011 - Present",
+      location: "Kathmandu, Nepal",
+      description:
+        "Mentoring undergraduate and graduate students in computer networks and security, robotics, ROS2, Webots, laboratory techniques, research methodology, and academic writing (including research questions and publication).",
+      students: [
+        { name: "Bharat Adhikari", detail: "Mechanical" },
+        { name: "Aryan Sharma", detail: "Chemical, Undergraduate" },
+      ],
+    },
   ];
 
   const industryExperience = [
@@ -128,9 +143,7 @@ const Experience = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-1">
                 {exp.title}
               </h3>
-              <p className="text-base text-gray-700 font-medium">
-                {exp.company}
-              </p>
+              <p className="text-base text-gray-700 font-medium">{exp.company}</p>
             </div>
 
             {exp.current && (
@@ -206,6 +219,47 @@ const Experience = () => {
     </div>
   );
 
+  const MentoringCard = ({ m, index }) => (
+    <div
+      key={index}
+      className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm"
+    >
+      <h3 className="text-lg font-bold text-gray-900 mb-1">{m.title}</h3>
+      <p className="text-sm text-gray-700 font-medium mb-3">{m.company}</p>
+
+      <div className="flex flex-col sm:flex-row gap-3 text-sm text-gray-600 mb-4">
+        <div className="flex items-center gap-2">
+          <Calendar className="w-4 h-4 flex-shrink-0" />
+          <span>{m.period}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <MapPin className="w-4 h-4 flex-shrink-0" />
+          <span>{m.location}</span>
+        </div>
+      </div>
+
+      <p className="text-sm text-gray-600 leading-relaxed">{m.description}</p>
+
+      {m.students?.length ? (
+        <div className="mt-5 pt-4 border-t border-gray-100">
+          <p className="text-xs font-medium text-gray-600 mb-2">
+            Current students mentored
+          </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs text-gray-500">
+            {m.students.map((s) => (
+              <li key={s.name} className="flex items-start gap-2">
+                <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
+                <span>
+                  {s.name} <span className="text-gray-400">({s.detail})</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
+
   return (
     <section
       id="experience"
@@ -244,7 +298,7 @@ const Experience = () => {
               </div>
             </div>
 
-            {/* Mentoring */}
+            {/* Mentoring (IIT + Tribhuvan University) */}
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <GraduationCap className="w-8 h-8 text-gray-900" />
@@ -254,48 +308,10 @@ const Experience = () => {
               </div>
               <div className="border-t-2 border-gray-300 mb-8"></div>
 
-              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">
-                  {mentoringRole.title}
-                </h3>
-
-                <p className="text-sm text-gray-700 font-medium mb-3">
-                  {mentoringRole.company}
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-3 text-sm text-gray-600 mb-4">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 flex-shrink-0" />
-                    <span>{mentoringRole.period}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 flex-shrink-0" />
-                    <span>{mentoringRole.location}</span>
-                  </div>
-                </div>
-
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {mentoringRole.description}
-                </p>
-
-                {/* Students mentored (clean layout) */}
-                <div className="mt-5 pt-4 border-t border-gray-100">
-                  <p className="text-xs font-medium text-gray-600 mb-2">
-                    Students mentored
-                  </p>
-
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs text-gray-500">
-                    {mentoredStudents.map((s) => (
-                      <li key={s.name} className="flex items-start gap-2">
-                        <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
-                        <span>
-                          {s.name}{" "}
-                          <span className="text-gray-400">({s.detail})</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="space-y-6">
+                {mentoringExperiences.map((m, idx) => (
+                  <MentoringCard key={idx} m={m} index={idx} />
+                ))}
               </div>
             </div>
           </div>
