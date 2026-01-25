@@ -102,6 +102,19 @@ const Experience = () => {
     },
   ];
 
+  // ✅ Domain areas directly below Industry Experience
+  const domainAreas = [
+    "AGI safety",
+    "LLM red-teaming",
+    "Model alignment",
+    "Model safety analysis",
+    "Multimodal safety",
+    "Visual commonsense reasoning",
+    "Commonsense reasoning for navigation",
+    "Embodied AI",
+    "Privacy-preserving federated learning",
+  ];
+
   const teachingAssignments = [
     {
       course:
@@ -144,7 +157,9 @@ const Experience = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-1">
                 {exp.title}
               </h3>
-              <p className="text-base text-gray-700 font-medium">{exp.company}</p>
+              <p className="text-base text-gray-700 font-medium">
+                {exp.company}
+              </p>
             </div>
 
             {exp.current && (
@@ -251,7 +266,8 @@ const Experience = () => {
               <li key={s.name} className="flex items-start gap-2">
                 <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gray-300 flex-shrink-0" />
                 <span>
-                  {s.name} <span className="text-gray-400">({s.detail})</span>
+                  {s.name}{" "}
+                  <span className="text-gray-400">({s.detail})</span>
                 </span>
               </li>
             ))}
@@ -356,7 +372,7 @@ const Experience = () => {
               </div>
             </div>
 
-            {/* Industry Experience */}
+            {/* Industry Experience + Domain Areas */}
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <Building2 className="w-8 h-8 text-gray-900" />
@@ -373,6 +389,22 @@ const Experience = () => {
                     <SimpleTimelineItem key={index} item={item} index={index} />
                   ))}
                 </div>
+              </div>
+
+              {/* Domain Areas (immediately below Industry Experience) */}
+              <div className="mt-10 bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                  Domain Areas
+                </h3>
+
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                  {domainAreas.map((area, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-gray-900 font-bold">•</span>
+                      <span className="text-sm text-gray-900">{area}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
