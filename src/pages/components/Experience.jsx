@@ -36,7 +36,7 @@ const Experience = () => {
       location: "Paris, France",
       current: false,
       description:
-        "Performed Quantum chemistry calculations and computational modeling as part of fully-funded European Commission scholarship.",
+        "Performed Quantum chemistry calculations and computational modeling as part of fully-funded European Commission's Erasmus Mundus  scholarship.",
     },
   ];
 
@@ -58,14 +58,15 @@ const Experience = () => {
     {
       title: "Student Mentor",
       company:
-        "Tribhuvan University, Institute of Engineering / Institute of Science and Technology",
+        "Tribhuvan University, Institute of Engineering(IOE) / Institute of Science and Technology(IOST)",
       period: "September 2011 - Present",
-      location: "Kathmandu, Nepal",
+      location: "Kathmandu",
       description:
         "Mentoring undergraduate and graduate students in computer networks and security, robotics, ROS2, Webots, laboratory techniques, research methodology, and academic writing (including research questions and publication).",
       students: [
-        { name: "Bharat Adhikari", detail: "Mechanical" },
+        { name: "Bharat Adhikari", detail: "Mechanical(IOE), MS " },
         { name: "Aryan Sharma", detail: "ECE, Undergraduate" },
+        { name: "Pramod Shrestha", detail: "CS, Undergraduate" },
       ],
     },
   ];
