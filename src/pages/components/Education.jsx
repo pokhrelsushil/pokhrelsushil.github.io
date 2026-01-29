@@ -6,7 +6,7 @@ const educationList = [
     degree: "PhD: Systems Design Engineering (SYDE)",
     institution: "University of Waterloo",
     location: "Waterloo, Ontario, Canada",
-    period: "Present",
+    
     description:
       "Comprehensive research on adaptive automation for Small Modular Reactor (SMR) control rooms using physics-informed multi-agent reinforcement learning (MARL). Focus areas include human–AI collaboration for sequential decision-making, interpretable and interactive AI, value elicitation and alignment, and foundation models for high-stakes systems. Applications span safety-critical autonomy, cyber–physical systems, robotics, biomedical engineering, and secure/privacy-aware intelligent systems, with emphasis on robustness, safety, and trustworthy deployment.",
   },
