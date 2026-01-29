@@ -14,7 +14,7 @@ const Experience = () => {
       company: "Systems Design Engineering, University of Waterloo",
       period: "202^* - Present",
       location: "Waterloo, ON, Canada",
-      current: true,
+  
       description:
         "Developing principled AI agents for human-AI collaboration in Small Modular Reactor Control room , autonomous vehicles and safety-critical systems using reinforcement learning(RL) and foundation models.",
     },
