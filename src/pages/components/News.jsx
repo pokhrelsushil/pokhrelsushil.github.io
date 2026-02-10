@@ -12,23 +12,6 @@ const News = () => {
         </h2>
 
         <ul className="list-disc pl-6 space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
-          
-          <li>
-            <span className="font-semibold">
-              [07/01–07/04/2026]
-            </span>{" "}
-            Will be attending the 18th International Conference on Social Robotics
-            (ICSR 2026), University of London, UK, focusing on advances in human–robot
-            interaction and socially intelligent robotic systems.{" "}
-            <a
-              href="https://icsr2026.uk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold underline text-blue-500"
-            >
-              Read More
-            </a>
-          </li>
 
           <li>
             <span className="font-semibold">
@@ -50,10 +33,29 @@ const News = () => {
             <span className="font-semibold">
               [07/06–07/10/2026]
             </span>{" "}
-            Will be attending The European Summer School on Artificial Intelligence
-            (ESSAI 2026), Vienna, Austria.{" "}
+            Will be taking part in The European Summer School on Artificial Intelligence
+            (ESSAI 2026), Vienna, Austria, participating in advanced training and
+            research discussions on modern AI methodologies and interdisciplinary
+            applications.{" "}
             <a
               href="https://essai2026.eu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline text-blue-500"
+            >
+              Read More
+            </a>
+          </li>
+
+          <li>
+            <span className="font-semibold">
+              [07/01–07/04/2026]
+            </span>{" "}
+            Will be attending the 18th International Conference on Social Robotics
+            (ICSR 2026), University of London, UK, focusing on advances in human–robot
+            interaction and socially intelligent robotic systems.{" "}
+            <a
+              href="https://icsr2026.uk/"
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold underline text-blue-500"
@@ -70,6 +72,22 @@ const News = () => {
             University of California, Los Angeles (8:00 AM–6:30 PM PST).{" "}
             <a
               href="https://www.ipam.ucla.edu/programs/special-events-and-conferences/ai-for-science-kickoff-2026/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline text-blue-500"
+            >
+              Read More
+            </a>
+          </li>
+
+          <li>
+            <span className="font-semibold">
+              [02/02/2026]
+            </span>{" "}
+            Paper entitled <em>Attomolar and beyond: Ultra-sensitive electrochemical
+            biosensors for next-generation detection</em> published online.{" "}
+            <a
+              href="https://www.sciencedirect.com/science/article/pii/S016599362600083X"
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold underline text-blue-500"
@@ -104,19 +122,19 @@ const News = () => {
 
           <li>
             <span className="font-semibold">
+              [12/08–12/10/2025]
+            </span>{" "}
+            Participated in the University Network of Excellence in Nuclear
+            Engineering (UNENE) Conference, Toronto, Canada.
+          </li>
+
+          <li>
+            <span className="font-semibold">
               [12/01/2025]
             </span>{" "}
             Paper entitled <em>Computational Insight into IFNAR1 Gene Dysfunction:
             Identification of Deleterious nsSNPs through In-Silico Mutational
             Analysis</em> published online.
-          </li>
-
-          <li>
-            <span className="font-semibold">
-              [12/08–12/10/2025]
-            </span>{" "}
-            Participated in the University Network of Excellence in Nuclear
-            Engineering (UNENE) Conference, Toronto, Canada.
           </li>
 
         </ul>
