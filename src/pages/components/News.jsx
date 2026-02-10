@@ -6,12 +6,30 @@ const News = () => {
       id="news"
       className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-4xl mx-auto space-y-6">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black">
           News
         </h2>
 
-        <ul className="list-disc pl-6 space-y-4 text-base sm:text-lg md:text-xl text-gray-800">
+        <ul className="list-disc pl-6 space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+          
+          <li>
+            <span className="font-semibold">
+              [07/01–07/04/2026]
+            </span>{" "}
+            Will be attending the 18th International Conference on Social Robotics
+            (ICSR 2026), University of London, UK, focusing on advances in human–robot
+            interaction and socially intelligent robotic systems.{" "}
+            <a
+              href="https://icsr2026.uk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline text-blue-500"
+            >
+              Read More
+            </a>
+          </li>
+
           <li>
             <span className="font-semibold">
               [09/27–10/01/2026]
@@ -100,6 +118,7 @@ const News = () => {
             Participated in the University Network of Excellence in Nuclear
             Engineering (UNENE) Conference, Toronto, Canada.
           </li>
+
         </ul>
       </div>
     </section>
@@ -107,4 +126,3 @@ const News = () => {
 };
 
 export default News;
-
