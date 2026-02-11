@@ -105,6 +105,7 @@ const Experience = () => {
   // ✅ Domain areas directly below Industry Experience
   const domainAreas = [
     "AGI safety",
+  
     "LLM red-teaming",
     "Model alignment",
     "Model safety analysis",
@@ -113,6 +114,11 @@ const Experience = () => {
     "Commonsense reasoning for navigation",
     "Embodied AI",
     "Privacy-preserving federated learning",
+    "Social Learning ",
+    "Theory- of -Mind",
+    "Embodied Cognition",
+    "Game Theory"
+
   ];
 
   const teachingAssignments = [
