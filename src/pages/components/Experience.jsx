@@ -72,13 +72,7 @@ const Experience = () => {
   ];
 
   const industryExperience = [
-    {
-      title: "Research Fellow",
-      company: "Mentored by an Anthropic researcher",
-      period: "",
-      location: "",
-      description: "",
-    },
+   
     {
       title: "Research Virtual Intern",
       company: "Microsoft Responsible AI",
@@ -87,11 +81,7 @@ const Experience = () => {
       description: "",
     },
     {
-      title: "Research Virtual Intern",
-      company: "Samsung Research America",
-      period: "",
-      location: "",
-      description: "",
+      
     },
     {
       title: "Research Intern",
