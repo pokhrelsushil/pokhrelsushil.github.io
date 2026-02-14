@@ -40,7 +40,7 @@ const News = () => {
       end: "2026-10-01",
       title:
         "Will be attending the IEEE/RSJ International Conference on Intelligent Robots & Systems (IROS 2026), Pittsburgh, PA, USA.",
-      href: "https://www.iros2026.org/",
+      href: "https://2026.ieee-iros.org/",
     },
     {
       type: "event",
@@ -126,7 +126,7 @@ const News = () => {
       title:
         'Our paper goes online: "Computational Insight into IFNAR1 Gene Dysfunction: Identification of Deleterious nsSNPs through In-Silico Mutational Analysis."',
       // Add your DOI/journal link here if available:
-      // href: "https://doi.org/....",
+      // href: "https://www.sciencedirect.com/science/article/abs/pii/S3050475925010322",
     },
   ];
 
