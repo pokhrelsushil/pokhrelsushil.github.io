@@ -40,7 +40,7 @@ const News = () => {
       end: "2026-10-01",
       text:
         "Will be attending the IEEE/RSJ International Conference on Intelligent Robots & Systems (IROS 2026), Pittsburgh, PA, USA.",
-      href: "https://www.iros2026.org/",
+      href: "https://2026.ieee-iros.org/program/program-overview/",
     },
     {
       type: "event",
