@@ -190,7 +190,7 @@ const News = () => {
 
         <div className="space-y-2">
           <h3 className="text-sm sm:text-base font-semibold text-gray-950">
-            Participated / Past (latest first)
+            Participated / Past conferences
           </h3>
           <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
             {pastEvents.map((x, i) => (

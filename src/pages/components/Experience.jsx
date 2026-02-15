@@ -80,9 +80,7 @@ const Experience = () => {
       location: "",
       description: "",
     },
-    {
-      
-    },
+    {},
     {
       title: "Research Intern",
       company: "Honda Research Institute — Human-centred AI",
@@ -107,8 +105,8 @@ const Experience = () => {
     "Social Learning ",
     "Theory- of -Mind",
     "Embodied Cognition",
-    "Game Theory"
-
+    "Game Theory",
+   "ETC ETC ",
   ];
 
   const teachingAssignments = [
