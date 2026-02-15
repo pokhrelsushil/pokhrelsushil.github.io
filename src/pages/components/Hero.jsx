@@ -56,7 +56,7 @@ const Hero = () => {
 
             {/* Description */}
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Interdisciplinary researcher working at the intersection of autonomous systems,
+              Interdisciplinary researcher working at the intersection of Material Science and Engineering ,autonomous systems,
               cyber–physical systems, control, and machine learning to address real-world challenges.
             </p>
 
