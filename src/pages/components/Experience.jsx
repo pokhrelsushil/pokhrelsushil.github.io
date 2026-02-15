@@ -73,6 +73,14 @@ const Experience = () => {
 
   const industryExperience = [
    
+
+    {
+      title: "Chief technical officer(CTO) : Repo-AI",
+      company: "New Startup Company for quality github repositories,responsible liable AI company",
+      period: "",
+      location: "",
+      description: "",
+    },
     {
       title: "Research Virtual Intern",
       company: "Microsoft Responsible AI",
@@ -80,7 +88,6 @@ const Experience = () => {
       location: "",
       description: "",
     },
-    {},
     {
       title: "Research Intern",
       company: "Honda Research Institute — Human-centred AI",
