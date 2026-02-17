@@ -5,6 +5,7 @@ import {
   Calendar,
   MapPin,
   Building2,
+  ExternalLink,
 } from "lucide-react";
 
 const Experience = () => {
@@ -12,11 +13,11 @@ const Experience = () => {
     {
       title: "Graduate Research Assistant",
       company: "Systems Design Engineering, University of Waterloo",
-      period: "202^* - Present",
-      location: "Waterloo, ON, Canada",
-  
+      period: "202^* ---------",
+      location: "Waterloo, Ontario, Canada",
       description:
         "Developing principled AI agents for human-AI collaboration in Small Modular Reactor Control room , autonomous vehicles and safety-critical systems using reinforcement learning(RL) and foundation models.",
+      
     },
     {
       title: "Graduate Research Assistant",
@@ -32,11 +33,11 @@ const Experience = () => {
       title: "Erasmus Mundus Research Scholar",
       company:
         "Computational Quantum Theoritical Physics Laboratory, Universite Piere and Marie Curie (Sorbonne University)",
-      period: " 201^*",
+      period: "201^*",
       location: "Paris, France",
       current: false,
       description:
-        "Performed Quantum chemistry calculations and computational modeling as part of fully-funded European Commission's Erasmus Mundus  scholarship.",
+        "Performed Quantum chemistry calculations and computational modeling as part of fully-funded European Commission's Erasmus Mundus scholarship.",
     },
   ];
 
@@ -72,20 +73,17 @@ const Experience = () => {
   ];
 
   const industryExperience = [
-   
-
     {
-  title: "Founder and Chief Technical Officer (CTO), Open Robohub",
-  company: "Open Robohub",
-  period: "Present",
-  location: "North America",
-  current: true,
-  website: "https://openrobohub.com",
-  twitter: "https://x.com/openrobohub",
-  description:
-    "Founder of Open Robohub, focusing on open robotics tools, community infrastructure, and applied AI/robotics initiatives.",
-},
-
+      title: "Founder and Chief Technical Officer (CTO), Open Robohub",
+      company: "Open Robohub",
+      period: "Present",
+      location: "North America",
+      current: true,
+      website: "https://openrobohub.com",
+      twitter: "https://x.com/openrobohub",
+      description:
+        "Founder of Open Robohub, focusing on open robotics tools, all things Robotics & AI/ML, and applied AI/robotics initiatives. For more contact founder : sushil@openrobohub.com",
+    },
     {
       title: "Research Virtual Intern",
       company: "Microsoft Responsible AI",
@@ -105,7 +103,6 @@ const Experience = () => {
   // ✅ Domain areas directly below Industry Experience
   const domainAreas = [
     "AGI safety",
-  
     "LLM red-teaming",
     "Model alignment",
     "Model safety analysis",
@@ -118,7 +115,7 @@ const Experience = () => {
     "Theory- of -Mind",
     "Embodied Cognition",
     "Game Theory",
-   "ETC ETC ",
+    "ETC ETC ",
   ];
 
   const teachingAssignments = [
@@ -142,11 +139,17 @@ const Experience = () => {
     {
       course: "MSE 220L - Nano Engineering (Materials Science and Engineering)",
       terms: ["Fall 2023"],
+    
     },
+    
     {
       course: "Experimental Design and Statistical Analysis (SUNY Binghamton)",
       terms: ["Fall 2020 - Spring 2022"],
     },
+    {
+    course: "ECE 350 - Data structure and algorithm",
+      terms: ["Winter 2024"],
+    }
   ];
 
   const ExperienceCard = ({ exp, index }) => (
@@ -211,8 +214,20 @@ const Experience = () => {
 
       <div className="flex-1">
         <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
-          <p className="text-sm text-gray-700 font-medium">{item.company}</p>
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">
+                {item.title}
+              </h3>
+              <p className="text-sm text-gray-700 font-medium">{item.company}</p>
+            </div>
+
+            {item.current && (
+              <span className="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full border border-green-200">
+                Current
+              </span>
+            )}
+          </div>
 
           {(item.period || item.location) && (
             <div className="flex flex-col sm:flex-row gap-3 text-sm text-gray-600 mt-3">
@@ -235,6 +250,34 @@ const Experience = () => {
             <p className="text-sm text-gray-600 leading-relaxed mt-3">
               {item.description}
             </p>
+          ) : null}
+
+          {(item.website || item.twitter) ? (
+            <div className="mt-4 flex flex-wrap gap-4 text-sm">
+              {item.website ? (
+                <a
+                  href={item.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-600 font-medium hover:underline"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  openrobohub.com
+                </a>
+              ) : null}
+
+              {item.twitter ? (
+                <a
+                  href={item.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-600 font-medium hover:underline"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  X (Twitter)
+                </a>
+              ) : null}
+            </div>
           ) : null}
         </div>
       </div>
