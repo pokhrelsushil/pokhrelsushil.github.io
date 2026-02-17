@@ -75,12 +75,17 @@ const Experience = () => {
    
 
     {
-      title: "Chief technical officer(CTO) : Repo-AI",
-      company: "New Startup Company for quality github repositories,responsible liable AI company",
-      period: "",
-      location: "",
-      description: "",
-    },
+  title: "Founder and Chief Technical Officer (CTO), Open Robohub",
+  company: "Open Robohub",
+  period: "Present",
+  location: "North America",
+  current: true,
+  website: "https://openrobohub.com",
+  twitter: "https://x.com/openrobohub",
+  description:
+    "Founder of Open Robohub, focusing on open robotics tools, community infrastructure, and applied AI/robotics initiatives.",
+},
+
     {
       title: "Research Virtual Intern",
       company: "Microsoft Responsible AI",
