@@ -133,6 +133,10 @@ const Experience = () => {
       terms: ["Spring 2025"],
     },
     {
+    course: "ECE 350 - Data structure and algorithm",
+      terms: ["Winter 2024"],
+    },
+    {
       course: "ARCH/CIVE 265 - Architecture/Civil Engineering",
       terms: ["Fall 2024"],
     },
@@ -146,10 +150,7 @@ const Experience = () => {
       course: "Experimental Design and Statistical Analysis (SUNY Binghamton)",
       terms: ["Fall 2020 - Spring 2022"],
     },
-    {
-    course: "ECE 350 - Data structure and algorithm",
-      terms: ["Winter 2024"],
-    }
+    
   ];
 
   const ExperienceCard = ({ exp, index }) => (
