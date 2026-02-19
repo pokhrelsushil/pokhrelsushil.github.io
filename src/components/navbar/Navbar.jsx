@@ -42,16 +42,16 @@ const Navbar = () => {
               <div className="flex flex-wrap justify-center lg:justify-start gap-1 sm:gap-1">
                 {[
                   {
+                    icon: FaGoogleScholar,
+                    label: "Google Scholar",
+                    href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
+                  },
+                  {
                     icon: Linkedin,
                     label: "LinkedIn",
                     href: "https://www.linkedin.com/in/sushilpokhrel/",
                   },
                   { icon: Github, label: "GitHub", href: "https://github.com/pokhrelsushil/" },
-                  {
-                    icon: FaGoogleScholar,
-                    label: "Google Scholar",
-                    href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
-                  },
                   {
                     icon: Mail,
                     label: "Email",

@@ -1,9 +1,11 @@
 import React from "react";
-import { ArrowRight, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { ArrowRight, Github, GraduationCap, Linkedin, Mail, School, Twitter } from "lucide-react";
 import { FaGoogleScholar } from "react-icons/fa6";
+import Googlescholar from '../../assets/GoogleScholar.png'
 
-import ScrollToExplore from "../../components/ScrollToExplore";
+//import ScrollToExplore from "../../components/ScrollToExplore";
 import profileImage from "../../assets/sushilpokhrel.jpg";
+import { SiGooglescholar } from "react-icons/si";
 
 const Hero = () => {
   const handleSmoothScroll = (e, id) => {
@@ -14,19 +16,21 @@ const Hero = () => {
     }
   };
 
+  
+
   const socials = [
+    {
+      icon: Googlescholar,
+      label: "Google Scholar",
+      href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
+      isReactIcon: true,
+    },
     {
       icon: Linkedin,
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/sushilpokhrel/",
     },
     { icon: Github, label: "GitHub", href: "https://github.com/pokhrelsushil/" },
-    {
-      icon: FaGoogleScholar,
-      label: "Google Scholar",
-      href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
-      isReactIcon: true,
-    },
     { icon: Mail, label: "Email", href: "mailto:sushil.pokhrel@gmail.com" },
     { icon: Twitter, label: "Twitter/X", href: "https://x.com/sushilpokhrel" },
   ];
