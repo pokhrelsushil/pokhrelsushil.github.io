@@ -1,11 +1,9 @@
 import React from "react";
 import { ArrowRight, Github, GraduationCap, Linkedin, Mail, School, Twitter } from "lucide-react";
-import { FaGoogleScholar } from "react-icons/fa6";
-import Googlescholar from '../../assets/GoogleScholar.png'
 
 //import ScrollToExplore from "../../components/ScrollToExplore";
 import profileImage from "../../assets/sushilpokhrel.jpg";
-import { SiGooglescholar } from "react-icons/si";
+import GoogleScholarIcon from "../../components/GoogleScholarIcon";
 
 const Hero = () => {
   const handleSmoothScroll = (e, id) => {
@@ -20,7 +18,7 @@ const Hero = () => {
 
   const socials = [
     {
-      icon: Googlescholar,
+      icon: GoogleScholarIcon,
       label: "Google Scholar",
       href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
       isReactIcon: true,
@@ -110,8 +108,6 @@ const Hero = () => {
                                  bg-white backdrop-blur-sm
                                  border border-gray-400
                                  rounded-xl sm:rounded-2xl
-                                 text-blue-600
-                                 hover:text-blue-700
                                  hover:border-blue-400/50
                                  hover:shadow-md hover:shadow-blue-500/20
                                  transition-all duration-300

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Github, Linkedin, Mail, Menu, Twitter, X } from "lucide-react";
-import { FaGoogleScholar } from "react-icons/fa6";
-
+import GoogleScholarIcon from "../../components/GoogleScholarIcon";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -42,7 +41,7 @@ const Navbar = () => {
               <div className="flex flex-wrap justify-center lg:justify-start gap-1 sm:gap-1">
                 {[
                   {
-                    icon: FaGoogleScholar,
+                  icon: GoogleScholarIcon,
                     label: "Google Scholar",
                     href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
                   },
