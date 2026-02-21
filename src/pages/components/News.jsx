@@ -4,36 +4,35 @@ const News = () => {
   // ---------- Date helpers ----------
   const toDate = (iso) => new Date(`${iso}T00:00:00`);
 
-  // Format exactly as you showed: [MM/DD–MM/DD/YYYY] or [MM/DD/YYYY]
+  // Original bracket style: [MM/DD–MM/DD/YYYY] OR [MM/DD/YYYY]
   const formatRange = (startISO, endISO) => {
-    const fmt = (dISO) => {
-      const d = toDate(dISO);
+    const fmt = (iso) => {
+      const d = toDate(iso);
       const mm = String(d.getMonth() + 1).padStart(2, "0");
       const dd = String(d.getDate()).padStart(2, "0");
       const yyyy = d.getFullYear();
       return `${mm}/${dd}/${yyyy}`;
     };
 
-    if (!endISO || endISO === startISO) return `[${fmt(startISO)}]`;
+    if (!endISO || startISO === endISO) return `[${fmt(startISO)}]`;
 
     const s = toDate(startISO);
     const e = toDate(endISO);
 
-    const smm = String(s.getMonth() + 1).padStart(2, "0");
-    const sdd = String(s.getDate()).padStart(2, "0");
-    const emm = String(e.getMonth() + 1).padStart(2, "0");
-    const edd = String(e.getDate()).padStart(2, "0");
-    const yyyy = e.getFullYear();
+    const sm = String(s.getMonth() + 1).padStart(2, "0");
+    const sd = String(s.getDate()).padStart(2, "0");
+    const em = String(e.getMonth() + 1).padStart(2, "0");
+    const ed = String(e.getDate()).padStart(2, "0");
+    const ey = e.getFullYear();
 
-    return `[${smm}/${sdd}–${emm}/${edd}/${yyyy}]`;
+    return `[${sm}/${sd}–${em}/${ed}/${ey}]`;
   };
 
-  // Auto-move items: if end date has passed -> Past, else Upcoming
   const today = new Date();
 
-  // ---------- Your content (ALL included) ----------
+  // ---------- Content ----------
   const items = [
-    // Upcoming
+    // Upcoming : 
     {
       type: "event",
       start: "2026-09-27",
@@ -63,7 +62,7 @@ const News = () => {
       start: "2026-02-16",
       end: "2026-02-20",
       text:
-        "Will be attending the India AI Impact Summit 2026, Bharat Mandapam (Pragati Maidan), New Delhi, India.",
+        "Attended the India AI Impact Summit 2026, Bharat Mandapam (Pragati Maidan), New Delhi, India.",
       href: "https://impact.indiaai.gov.in/",
     },
 
@@ -85,7 +84,7 @@ const News = () => {
       href: "https://www.sciencedirect.com/science/article/abs/pii/S3050475925010322",
     },
 
-    // Past (will remain past automatically once dates pass)
+    // Past
     {
       type: "event",
       start: "2026-02-10",
@@ -118,23 +117,15 @@ const News = () => {
     },
   ];
 
-  // ---------- Sort + split (latest first) ----------
+  // ---------- Split ----------
   const { upcomingEvents, pastEvents, publications } = useMemo(() => {
-    const pubs = items
-      .filter((x) => x.type === "publication")
-      .sort((a, b) => toDate(b.start) - toDate(a.start));
-
-    const nonPubs = items.filter((x) => x.type !== "publication");
-
     const isPast = (x) => toDate(x.end || x.start) < today;
 
-    const upcoming = nonPubs
-      .filter((x) => !isPast(x))
-      .sort((a, b) => toDate(b.start) - toDate(a.start));
+    const pubs = items.filter((x) => x.type === "publication");
+    const nonPubs = items.filter((x) => x.type !== "publication");
 
-    const past = nonPubs
-      .filter((x) => isPast(x))
-      .sort((a, b) => toDate(b.start) - toDate(a.start));
+    const upcoming = nonPubs.filter((x) => !isPast(x));
+    const past = nonPubs.filter((x) => isPast(x));
 
     return { upcomingEvents: upcoming, pastEvents: past, publications: pubs };
   }, [items]);
@@ -146,7 +137,7 @@ const News = () => {
         {formatRange(x.start, x.end)}
       </span>{" "}
       {x.text}{" "}
-      {x.href ? (
+      {x.href && (
         <a
           href={x.href}
           target="_blank"
@@ -155,47 +146,33 @@ const News = () => {
         >
           Read More
         </a>
-      ) : null}
+      )}
     </li>
   );
 
   return (
     <section id="news" className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-950">
-          News
-        </h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-950">News</h2>
 
         <div className="space-y-2">
-          <h3 className="text-sm sm:text-base font-semibold text-gray-950">
-            Upcoming (latest first)
-          </h3>
+          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Upcoming</h3>
           <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-            {upcomingEvents.map((x, i) => (
-              <Item key={`up-${i}`} x={x} />
-            ))}
+            {upcomingEvents.map((x, i) => <Item key={`up-${i}`} x={x} />)}
           </ul>
         </div>
 
         <div className="space-y-2">
-          <h3 className="text-sm sm:text-base font-semibold text-gray-950">
-            Journal Publications (latest first)
-          </h3>
+          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Journal Publications</h3>
           <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-            {publications.map((x, i) => (
-              <Item key={`pub-${i}`} x={x} />
-            ))}
+            {publications.map((x, i) => <Item key={`pub-${i}`} x={x} />)}
           </ul>
         </div>
 
         <div className="space-y-2">
-          <h3 className="text-sm sm:text-base font-semibold text-gray-950">
-            Participated / Past conferences
-          </h3>
+          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Participated / Past conferences</h3>
           <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-            {pastEvents.map((x, i) => (
-              <Item key={`past-${i}`} x={x} />
-            ))}
+            {pastEvents.map((x, i) => <Item key={`past-${i}`} x={x} />)}
           </ul>
         </div>
       </div>
