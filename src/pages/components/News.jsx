@@ -58,6 +58,14 @@ const News = () => {
       href: "https://icsr2026.uk/",
     },
     {
+  type: "event",
+  start: "2026-06-03",
+  end: "2026-06-12",
+  text:
+    "Will be attending the ELLIS Unit Milan: Reinforcement Learning Summer School (RLSS 2026), Milan, Italy.",
+  href: "https://ellis.eu/events/ellis-unit-milan-reinforcement-learning-summer-school-2026",
+},
+    {
       type: "event",
       start: "2026-02-16",
       end: "2026-02-20",
