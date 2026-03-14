@@ -133,7 +133,7 @@ const Experience = () => {
       terms: ["Spring 2025"],
     },
     {
-    course: "ECE 350 - Data structure and algorithm",
+    course: "ECE 250 - Data structure and algorithm",
       terms: ["Winter 2024"],
     },
     {
