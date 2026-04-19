@@ -4,15 +4,26 @@ const News = () => {
   const toDate = (iso) => new Date(`${iso}T00:00:00`);
 
   const formatRange = (startISO, endISO) => {
-    const pad = (n) => String(n).padStart(2, "0");
     const fmt = (iso) => {
       const d = toDate(iso);
-      return `${pad(d.getMonth() + 1)}/${pad(d.getDate())}/${d.getFullYear()}`;
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      return `${mm}/${dd}/${yyyy}`;
     };
-    if (!endISO || startISO === endISO) return fmt(startISO);
+
+    if (!endISO || startISO === endISO) return `[${fmt(startISO)}]`;
+
     const s = toDate(startISO);
     const e = toDate(endISO);
-    return `${pad(s.getMonth() + 1)}/${pad(s.getDate())}–${pad(e.getMonth() + 1)}/${pad(e.getDate())}/${e.getFullYear()}`;
+
+    const sm = String(s.getMonth() + 1).padStart(2, "0");
+    const sd = String(s.getDate()).padStart(2, "0");
+    const em = String(e.getMonth() + 1).padStart(2, "0");
+    const ed = String(e.getDate()).padStart(2, "0");
+    const ey = e.getFullYear();
+
+    return `[${sm}/${sd}–${em}/${ed}/${ey}]`;
   };
 
   const today = new Date();
@@ -62,7 +73,7 @@ const News = () => {
       text: 'Our paper goes online: "Computational Insight into IFNAR1 Gene Dysfunction: Identification of Deleterious nsSNPs through In-Silico Mutational Analysis."',
       href: "https://www.sciencedirect.com/science/article/abs/pii/S3050475925010322",
     },
-    // Past
+    // Past — CANDU added
     {
       type: "event",
       start: "2026-04-14",
@@ -110,180 +121,62 @@ const News = () => {
     const pubs = items.filter((x) => x.type === "publication");
     const nonPubs = items.filter((x) => x.type !== "publication");
     const upcoming = nonPubs.filter((x) => !isPast(x));
-    const past = nonPubs.filter((x) => isPast(x));
+    const past = nonPubs
+      .filter((x) => isPast(x))
+      .sort((a, b) => toDate(b.end || b.start) - toDate(a.end || a.start));
     return { upcomingEvents: upcoming, pastEvents: past, publications: pubs };
   }, []);
 
-  const styles = {
-    section: {
-      fontFamily: "'Outfit', 'Segoe UI', sans-serif",
-      minHeight: "100vh",
-      background: "#fff",
-      padding: "4rem 1.5rem 5rem",
-      color: "#111",
-    },
-    inner: {
-      maxWidth: "760px",
-      margin: "0 auto",
-    },
-    pageTitle: {
-      fontFamily: "'DM Serif Display', Georgia, serif",
-      fontSize: "clamp(2rem, 5vw, 2.8rem)",
-      fontWeight: 400,
-      letterSpacing: "-0.5px",
-      margin: "0 0 3rem",
-      lineHeight: 1.1,
-      color: "#111",
-    },
-    pageTitleEm: {
-      fontStyle: "italic",
-      color: "#999",
-    },
-    block: {
-      marginBottom: "2.75rem",
-    },
-    sectionLabel: {
-      fontFamily: "'DM Mono', 'Courier New', monospace",
-      fontSize: "10px",
-      fontWeight: 500,
-      letterSpacing: "0.18em",
-      textTransform: "uppercase",
-      color: "#aaa",
-      margin: "0 0 1rem",
-      display: "flex",
-      alignItems: "center",
-      gap: "10px",
-    },
-    sectionLabelLine: {
-      flex: 1,
-      height: "0.5px",
-      background: "#e5e5e5",
-    },
-    row: {
-      display: "grid",
-      gridTemplateColumns: "108px 1fr",
-      gap: "0 1.25rem",
-      padding: "0.75rem 0",
-      borderBottom: "0.5px solid #eee",
-      alignItems: "start",
-    },
-    date: {
-      fontFamily: "'DM Mono', 'Courier New', monospace",
-      fontSize: "10px",
-      color: "#bbb",
-      lineHeight: 1.6,
-      paddingTop: "2px",
-      wordBreak: "break-word",
-    },
-    body: {
-      fontSize: "13.5px",
-      fontWeight: 300,
-      lineHeight: 1.65,
-      color: "#222",
-    },
-    link: {
-      color: "#777",
-      textDecoration: "none",
-      borderBottom: "0.5px solid #ccc",
-      fontWeight: 400,
-    },
-    badge: {
-      display: "inline-block",
-      fontFamily: "'DM Mono', monospace",
-      fontSize: "9px",
-      fontWeight: 500,
-      letterSpacing: "0.12em",
-      textTransform: "uppercase",
-      padding: "2px 7px",
-      borderRadius: "3px",
-      marginRight: "6px",
-      verticalAlign: "middle",
-      position: "relative",
-      top: "-1px",
-    },
-    badgeRecent: {
-      background: "#e8f5e9",
-      color: "#2e7d32",
-    },
-    badgePub: {
-      background: "#e3f2fd",
-      color: "#1565c0",
-    },
-  };
-
-  const Item = ({ x, isRecent = false, isPub = false }) => (
-    <div style={styles.row}>
-      <div style={styles.date}>{formatRange(x.start, x.end)}</div>
-      <div style={styles.body}>
-        {isRecent && (
-          <span style={{ ...styles.badge, ...styles.badgeRecent }}>recent</span>
-        )}
-        {isPub && (
-          <span style={{ ...styles.badge, ...styles.badgePub }}>paper</span>
-        )}
-        {x.text}{" "}
-        {x.href && (
-          <a
-            href={x.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={styles.link}
-          >
-            view →
-          </a>
-        )}
-      </div>
-    </div>
-  );
-
-  // Flag the most recent past event
-  const sortedPast = [...pastEvents].sort(
-    (a, b) => toDate(b.end || b.start) - toDate(a.end || a.start)
+  const Item = ({ x, isRecent = false }) => (
+    <li className="leading-snug text-gray-900">
+      {isRecent && (
+        <span className="inline-block text-xs font-bold uppercase tracking-wide bg-green-100 text-green-800 px-2 py-0.5 rounded mr-2 align-middle">
+          Recent
+        </span>
+      )}
+      <span className="font-semibold text-gray-950">
+        {formatRange(x.start, x.end)}
+      </span>{" "}
+      {x.text}{" "}
+      {x.href && (
+        <a
+          href={x.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold underline text-gray-950 hover:text-black"
+        >
+          Read More
+        </a>
+      )}
+    </li>
   );
 
   return (
-    <section id="news" style={styles.section}>
-      {/* Google Fonts */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap"
-        rel="stylesheet"
-      />
-      <div style={styles.inner}>
-        <h2 style={styles.pageTitle}>
-          News <em style={styles.pageTitleEm}>&amp;</em> Updates
-        </h2>
+    <section id="news" className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-950">News</h2>
 
-        {/* Upcoming */}
-        <div style={styles.block}>
-          <div style={styles.sectionLabel}>
-            Upcoming events
-            <span style={styles.sectionLabelLine} />
-          </div>
-          {upcomingEvents.map((x, i) => (
-            <Item key={`up-${i}`} x={x} />
-          ))}
+        <div className="space-y-2">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Upcoming</h3>
+          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
+            {upcomingEvents.map((x, i) => <Item key={`up-${i}`} x={x} />)}
+          </ul>
         </div>
 
-        {/* Publications */}
-        <div style={styles.block}>
-          <div style={styles.sectionLabel}>
-            Journal publications
-            <span style={styles.sectionLabelLine} />
-          </div>
-          {publications.map((x, i) => (
-            <Item key={`pub-${i}`} x={x} isPub />
-          ))}
+        <div className="space-y-2">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Journal Publications</h3>
+          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
+            {publications.map((x, i) => <Item key={`pub-${i}`} x={x} />)}
+          </ul>
         </div>
 
-        {/* Past */}
-        <div style={styles.block}>
-          <div style={styles.sectionLabel}>
-            Past conferences &amp; courses
-            <span style={styles.sectionLabelLine} />
-          </div>
-          {sortedPast.map((x, i) => (
-            <Item key={`past-${i}`} x={x} isRecent={i === 0} />
-          ))}
+        <div className="space-y-2">
+          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Participated / Past conferences</h3>
+          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
+            {pastEvents.map((x, i) => (
+              <Item key={`past-${i}`} x={x} isRecent={i === 0} />
+            ))}
+          </ul>
         </div>
       </div>
     </section>
