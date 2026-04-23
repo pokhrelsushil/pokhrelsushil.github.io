@@ -3,7 +3,7 @@ import { GraduationCap, Calendar, MapPin } from "lucide-react";
 
 const educationList = [
   {
-    degree: "Grad :System design Engineering",
+    degree: "Grad :Systems design Engineering",
     institution: "University of Waterloo",
     location: "Waterloo, Ontario, Canada",
     
