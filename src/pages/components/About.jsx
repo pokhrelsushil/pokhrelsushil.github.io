@@ -59,7 +59,7 @@ const About = () => {
 
               <ul className="space-y-3 text-gray-700">
                 {[
-                  "Human–AI Interaction (HF, HRI, HCI)",
+                  "Human–AI Interaction (HRI, HCI)",
                   "Reinforcement Learning & Autonomous Agents",
                   "Robot Learning & Control Theory",
                   "Complex Systems & Cyber-Physical Systems",
