@@ -59,11 +59,11 @@ const About = () => {
 
               <ul className="space-y-3 text-gray-700">
                 {[
-                  "Human–AI Interaction (HRI, HCI)",
-                  "Reinforcement Learning & Autonomous Agents",
+                  "Human–AI Interaction (HRI, HCI), autonomous agents",
+                  "Deep Learning, Reinforcement Learning, Lifelong Learning & Natural Language Processing ",
                   "Robot Learning & Control Theory",
-                  "Complex Systems & Cyber-Physical Systems",
-                  "Materials Science, Biomedical Engineering & Computing",
+                  "Complex & Cyber-Physical Systems",
+                  "Materials Science, <Chemical />Biomedical Engineering & Computing",
                 ].map((item) => (
                   <li key={item} className="flex items-start">
                     <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3"></span>
