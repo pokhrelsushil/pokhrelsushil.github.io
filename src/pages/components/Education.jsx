@@ -8,7 +8,7 @@ const educationList = [
     location: "Waterloo, Ontario, Canada",
     
     description:
-      "Comprehensive research on adaptive automation in Small Modular Reactor (SMR) control rooms using physics-informed multi-agent reinforcement learning (MARL). Focus areas include human–AI collaboration for sequential decision-making, interpretable and interactive AI, value elicitation and alignment, and foundation models for high-stakes systems. Applications span safety-critical autonomy, cyber–physical systems, robotics, biomedical engineering, and secure/privacy-aware intelligent systems, with emphasis on robustness, safety, and trustworthy deployment.",
+      "My research interests lie at the intersection of artificial intelligence, machine learning, and computational science, with a focus on uncertainty-aware learning and decision-making for scientific discovery. I am particularly interested in reinforcement learning, uncertainty quantification, optimal experimental design, Bayesian optimization, and sequential decision-making under uncertainty. I aim to develop mathematically grounded and data-efficient AI methods that integrate machine learning with domain knowledge to enable reliable prediction, adaptive experimentation, and intelligent scientific discovery.",
   },
   {
     degree: "MS: Biomedical Engineering (BME)",

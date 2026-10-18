@@ -16,7 +16,7 @@ const Experience = () => {
       period: "202^* ---------",
       location: "Waterloo, Ontario, Canada",
       description:
-        "Developing principled AI agents for human-AI collaboration in Small Modular Reactor Control room , autonomous vehicles and safety-critical systems using reinforcement learning(RL) and foundation models.",
+        "Developing uncertainty-aware machine learning and reinforcement learning (RL) methods for scientific discovery, engineering design, and robotics, integrating domain knowledge with data-efficient learning to enable reliable prediction, adaptive experimentation, and sequential decision-making under uncertainty.",
       
     },
     {
