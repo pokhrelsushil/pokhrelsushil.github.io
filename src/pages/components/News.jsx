@@ -1,195 +1,348 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  CalendarDays,
+  ExternalLink,
+  Heart,
+  House,
+  MapPin,
+  Plane,
+  Presentation,
+} from "lucide-react";
+
+// Dates are ISO strings (YYYY-MM-DD). Use end: "present" for ongoing items.
+// Trips with a pastText move into Past Conferences automatically once they end.
+const travel = [
+  {
+    start: "2026-11-02",
+    end: "2026-11-11",
+    place: "Taiwan",
+    text: "Travelling to Taiwan for a conference.",
+    pastText: "Attended a conference in Taiwan.",
+    returnDate: "2026-11-12",
+    returnTo: "Aggieland",
+  },
+];
+
+const personal = [
+  {
+    start: "2026-10-18",
+    end: "2026-10-18",
+    icon: Heart,
+    accent: "rose",
+    text: 'Tied the knot with Subha, my long-time partner, best friend, and the love of my life. After years of growing together, we said "forever" and began the most beautiful chapter of our story. ❤️',
+  },
+  {
+    start: "2026-08-21",
+    end: "present",
+    icon: MapPin,
+    accent: "blue",
+    text: "Roaming around Aggieland in College Station, Texas.",
+  },
+];
+
+const conferences = [
+  {
+    start: "2026-09-27",
+    end: "2026-10-01",
+    text: "Will be attending the IEEE/RSJ International Conference on Intelligent Robots & Systems (IROS 2026), Pittsburgh, PA, USA.",
+    href: "https://2026.ieee-iros.org/program/program-overview/",
+  },
+  {
+    start: "2026-07-06",
+    end: "2026-07-10",
+    text: "Will be taking part in The European Summer School on Artificial Intelligence (ESSAI 2026), Vienna, Austria.",
+    href: "https://essai2026.eu/",
+  },
+  {
+    start: "2026-07-01",
+    end: "2026-07-04",
+    text: "Will be attending the 18th International Conference on Social Robotics (ICSR 2026), University of London, UK.",
+    href: "https://icsr2026.uk/",
+  },
+  {
+    start: "2026-06-03",
+    end: "2026-06-12",
+    text: "Will be attending the ELLIS Unit Milan: Reinforcement Learning Summer School (RLSS 2026), Milan, Italy.",
+    href: "https://ellis.eu/events/ellis-unit-milan-reinforcement-learning-summer-school-2026",
+  },
+  {
+    start: "2026-04-14",
+    end: "2026-04-17",
+    text: "Completed the CANDU Reactor Design Short Course (UNENE), delivered live online — covering reactor core & fuel design, safety systems, and thermal-hydraulics.",
+    href: "https://unene.ca/education/short-courses/candu-design-short-course/",
+  },
+  {
+    start: "2026-02-16",
+    end: "2026-02-20",
+    text: "Attended the India AI Impact Summit 2026, Bharat Mandapam (Pragati Maidan), New Delhi, India.",
+    href: "https://impact.indiaai.gov.in/",
+  },
+  {
+    start: "2026-02-10",
+    end: "2026-02-10",
+    text: "Attended the conference: AI for Science: Kickoff 2026, University of California, Los Angeles (8:00 AM–6:30 PM PST).",
+    href: "https://www.ipam.ucla.edu/programs/special-events-and-conferences/ai-for-science-kickoff-2026/",
+  },
+  {
+    start: "2026-01-25",
+    end: "2026-01-30",
+    text: "Travelled to attend Dagstuhl Seminar 26051 — User-Aligned Assessment of AI Systems, Schloss Dagstuhl, Germany.",
+    href: "https://www.dagstuhl.de/en/seminars/seminar-calendar/seminar-details/26051",
+  },
+  {
+    start: "2026-01-14",
+    end: "2026-01-14",
+    text: "Attended the seminar: AI and Canada's Talent Advantage — a special on-campus discussion with the Minister of AI and Digital Innovation.",
+  },
+  {
+    start: "2025-12-08",
+    end: "2025-12-10",
+    text: "Participated in the University Network of Excellence in Nuclear Engineering (UNENE) Conference, Toronto, Canada.",
+  },
+];
+
+const RECENT_DAYS = 90;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const toDate = (iso) => new Date(`${iso}T00:00:00`);
+const startOfToday = () => {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
+
+const fmt = (d, opts) => d.toLocaleDateString("en-US", opts);
+
+// "Oct 18, 2026" · "Nov 2 – 11, 2026" · "Sep 27 – Oct 1, 2026" · "Aug 21, 2026 – Present"
+const formatRange = (startISO, endISO) => {
+  const s = toDate(startISO);
+  const full = { month: "short", day: "numeric", year: "numeric" };
+  if (endISO === "present") return `${fmt(s, full)} – Present`;
+  if (!endISO || startISO === endISO) return fmt(s, full);
+
+  const e = toDate(endISO);
+  if (s.getFullYear() !== e.getFullYear()) return `${fmt(s, full)} – ${fmt(e, full)}`;
+  if (s.getMonth() !== e.getMonth())
+    return `${fmt(s, { month: "short", day: "numeric" })} – ${fmt(e, full)}`;
+  return `${fmt(s, { month: "short", day: "numeric" })} – ${e.getDate()}, ${e.getFullYear()}`;
+};
+
+// upcoming | ongoing | past, plus how many days away / ago
+const getStatus = (x, today) => {
+  const s = toDate(x.start);
+  if (s > today) return { state: "upcoming", days: Math.round((s - today) / DAY_MS) };
+  if (x.end === "present" || toDate(x.end || x.start) >= today) return { state: "ongoing" };
+  return { state: "past", days: Math.round((today - toDate(x.end || x.start)) / DAY_MS) };
+};
+
+const byStartDesc = (a, b) => toDate(b.start) - toDate(a.start);
+
+const Badge = ({ tone, children }) => {
+  const tones = {
+    blue: "bg-blue-100 text-blue-800",
+    amber: "bg-amber-100 text-amber-800",
+    green: "bg-green-100 text-green-800",
+    gray: "bg-gray-100 text-gray-700",
+  };
+  return (
+    <span
+      className={`inline-flex items-center text-[11px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${tones[tone]}`}
+    >
+      {children}
+    </span>
+  );
+};
+
+const DateLine = ({ start, end }) => (
+  <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-600">
+    <CalendarDays aria-hidden="true" className="w-4 h-4" />
+    {formatRange(start, end)}
+  </span>
+);
+
+const ReadMore = ({ href }) =>
+  href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-800"
+    >
+      Read more <ExternalLink aria-hidden="true" className="w-3.5 h-3.5" />
+    </a>
+  ) : null;
+
+const SectionCard = ({ icon, iconClass, title, subtitle, children, className = "" }) => {
+  const Icon = icon;
+  return (
+  <div className={`bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-500 ${className}`}>
+    <div className="flex items-center gap-4 mb-6">
+      <div className={`p-3 rounded-2xl flex-shrink-0 ${iconClass}`}>
+        <Icon aria-hidden="true" className="w-6 h-6" />
+      </div>
+      <div>
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-950">{title}</h3>
+        {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+      </div>
+    </div>
+    {children}
+  </div>
+  );
+};
+
+// Re-renders at local midnight so countdowns stay correct on a page left open.
+const useToday = () => {
+  const [today, setToday] = useState(startOfToday);
+  useEffect(() => {
+    const next = new Date(today);
+    next.setDate(next.getDate() + 1);
+    const timer = setTimeout(() => setToday(startOfToday()), next - new Date() + 1000);
+    return () => clearTimeout(timer);
+  }, [today]);
+  return today;
+};
 
 const News = () => {
-  const toDate = (iso) => new Date(`${iso}T00:00:00`);
+  const today = useToday();
+  const isPast = (x) => getStatus(x, today).state === "past";
 
-  const formatRange = (startISO, endISO) => {
-    const fmt = (iso) => {
-      const d = toDate(iso);
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const dd = String(d.getDate()).padStart(2, "0");
-      const yyyy = d.getFullYear();
-      return `${mm}/${dd}/${yyyy}`;
-    };
+  const travelItems = travel.filter((x) => !isPast(x)).sort(byStartDesc);
+  const personalItems = [...personal].sort(byStartDesc);
+  const pastConferences = [
+    ...conferences,
+    ...travel.filter((x) => x.pastText).map((x) => ({ ...x, text: x.pastText })),
+  ]
+    .filter(isPast)
+    .sort(byStartDesc);
 
-    if (endISO === "present") return `[${fmt(startISO)}–Present]`;
-    if (!endISO || startISO === endISO) return `[${fmt(startISO)}]`;
-
-    const s = toDate(startISO);
-    const e = toDate(endISO);
-
-    const sm = String(s.getMonth() + 1).padStart(2, "0");
-    const sd = String(s.getDate()).padStart(2, "0");
-    const em = String(e.getMonth() + 1).padStart(2, "0");
-    const ed = String(e.getDate()).padStart(2, "0");
-    const ey = e.getFullYear();
-
-    return `[${sm}/${sd}–${em}/${ed}/${ey}]`;
+  const travelBadge = (x) => {
+    const { state, days } = getStatus(x, today);
+    if (state === "upcoming")
+      return <Badge tone="blue">Upcoming · {days === 1 ? "tomorrow" : `in ${days} days`}</Badge>;
+    if (state === "ongoing") return <Badge tone="amber">On the road</Badge>;
+    return <Badge tone="gray">Completed</Badge>;
   };
 
-  const today = new Date();
+  const personalBadge = (x) => {
+    const { state, days } = getStatus(x, today);
+    if (state === "upcoming") return <Badge tone="blue">Upcoming</Badge>;
+    if (state === "ongoing") return <Badge tone="green">Current</Badge>;
+    if (days <= RECENT_DAYS) return <Badge tone="green">Recent</Badge>;
+    return null;
+  };
 
-  const items = [
-    // Personal
-    {
-      type: "personal",
-      start: "2026-11-02",
-      end: "2026-11-11",
-      text: "Travelling to Taiwan for a conference, returning to Aggieland on 11/12/2026.",
-    },
-    {
-      type: "personal",
-      start: "2026-10-18",
-      end: "2026-10-18",
-      text: "Tied the knot with Subha, my long-time partner, best friend, and the love of my life. After years of growing together, we said \"forever\" and began the most beautiful chapter of our story. ❤️",
-    },
-    {
-      type: "personal",
-      start: "2026-08-21",
-      end: "present",
-      text: "Roaming around Aggieland in College Station, Texas.",
-    },
-    // Upcoming
-    {
-      type: "event",
-      start: "2026-09-27",
-      end: "2026-10-01",
-      text: "Will be attending the IEEE/RSJ International Conference on Intelligent Robots & Systems (IROS 2026), Pittsburgh, PA, USA.",
-      href: "https://2026.ieee-iros.org/program/program-overview/",
-    },
-    {
-      type: "event",
-      start: "2026-07-06",
-      end: "2026-07-10",
-      text: "Will be taking part in The European Summer School on Artificial Intelligence (ESSAI 2026), Vienna, Austria.",
-      href: "https://essai2026.eu/",
-    },
-    {
-      type: "event",
-      start: "2026-07-01",
-      end: "2026-07-04",
-      text: "Will be attending the 18th International Conference on Social Robotics (ICSR 2026), University of London, UK.",
-      href: "https://icsr2026.uk/",
-    },
-    {
-      type: "event",
-      start: "2026-06-03",
-      end: "2026-06-12",
-      text: "Will be attending the ELLIS Unit Milan: Reinforcement Learning Summer School (RLSS 2026), Milan, Italy.",
-      href: "https://ellis.eu/events/ellis-unit-milan-reinforcement-learning-summer-school-2026",
-    },
-    // Past — CANDU added
-    {
-      type: "event",
-      start: "2026-04-14",
-      end: "2026-04-17",
-      text: "Completed the CANDU Reactor Design Short Course (UNENE), delivered live online — covering reactor core & fuel design, safety systems, and thermal-hydraulics.",
-      href: "https://unene.ca/education/short-courses/candu-design-short-course/",
-    },
-    {
-      type: "event",
-      start: "2026-02-16",
-      end: "2026-02-20",
-      text: "Attended the India AI Impact Summit 2026, Bharat Mandapam (Pragati Maidan), New Delhi, India.",
-      href: "https://impact.indiaai.gov.in/",
-    },
-    {
-      type: "event",
-      start: "2026-02-10",
-      end: "2026-02-10",
-      text: "Attended the conference: AI for Science: Kickoff 2026, University of California, Los Angeles (8:00 AM–6:30 PM PST).",
-      href: "https://www.ipam.ucla.edu/programs/special-events-and-conferences/ai-for-science-kickoff-2026/",
-    },
-    {
-      type: "event",
-      start: "2026-01-25",
-      end: "2026-01-30",
-      text: "Travelled to attend Dagstuhl Seminar 26051 — User-Aligned Assessment of AI Systems, Schloss Dagstuhl, Germany.",
-      href: "https://www.dagstuhl.de/en/seminars/seminar-calendar/seminar-details/26051",
-    },
-    {
-      type: "seminar",
-      start: "2026-01-14",
-      end: "2026-01-14",
-      text: "Attended the seminar: AI and Canada's Talent Advantage — a special on-campus discussion with the Minister of AI and Digital Innovation.",
-    },
-    {
-      type: "event",
-      start: "2025-12-08",
-      end: "2025-12-10",
-      text: "Participated in the University Network of Excellence in Nuclear Engineering (UNENE) Conference, Toronto, Canada.",
-    },
-  ];
-
-  const { personalUpdates, pastEvents } = useMemo(() => {
-    const isPast = (x) => toDate(x.end || x.start) < today;
-    const personal = items
-      .filter((x) => x.type === "personal")
-      .sort((a, b) => toDate(b.start) - toDate(a.start));
-    const past = items
-      .filter((x) => x.type !== "personal")
-      .filter((x) => isPast(x))
-      .sort((a, b) => toDate(b.end || b.start) - toDate(a.end || a.start));
-    return { personalUpdates: personal, pastEvents: past };
-  }, []);
-
-  const Item = ({ x, isRecent = false, isUpcoming = false }) => (
-    <li className="leading-snug text-gray-900">
-      {isRecent && (
-        <span className="inline-block text-xs font-bold uppercase tracking-wide bg-green-100 text-green-800 px-2 py-0.5 rounded mr-2 align-middle">
-          Recent
-        </span>
-      )}
-      {isUpcoming && (
-        <span className="inline-block text-xs font-bold uppercase tracking-wide bg-blue-100 text-blue-800 px-2 py-0.5 rounded mr-2 align-middle">
-          Upcoming
-        </span>
-      )}
-      <span className="font-semibold text-gray-950">
-        {formatRange(x.start, x.end)}
-      </span>{" "}
-      {x.text}{" "}
-      {x.href && (
-        <a
-          href={x.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold underline text-gray-950 hover:text-black"
-        >
-          Read More
-        </a>
-      )}
-    </li>
-  );
+  const accents = {
+    rose: "bg-rose-100 text-rose-600",
+    blue: "bg-blue-100 text-blue-600",
+  };
 
   return (
-    <section id="news" className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-950">News</h2>
+    <section
+      id="news"
+      aria-labelledby="news-heading"
+      className="min-h-screen bg-gray-50/80 py-12 sm:py-16 md:py-20 px-5 sm:px-6 lg:px-8"
+    >
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12 md:mb-16">
+          <h2
+            id="news-heading"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-black mb-4"
+          >
+            News
+          </h2>
+          <div className="w-24 sm:w-32 md:w-40 h-1 bg-blue-400 mx-auto rounded-full shadow-lg shadow-blue-500/60" />
+        </div>
 
-        {personalUpdates.length > 0 && (
-          <div className="space-y-2">
-            <h3 className="text-sm sm:text-base font-semibold text-gray-950">Personal</h3>
-            <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-              {personalUpdates.map((x, i) => (
-                <Item
-                  key={`personal-${i}`}
-                  x={x}
-                  isRecent={toDate(x.start) <= today}
-                  isUpcoming={toDate(x.start) > today}
-                />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
+          {/* Travel */}
+          <SectionCard
+            icon={Plane}
+            iconClass="bg-sky-100 text-sky-600"
+            title="Travel"
+            subtitle="Where I'm headed"
+          >
+            {travelItems.length === 0 && (
+              <p className="inline-flex items-center gap-2 text-sm sm:text-base text-gray-600">
+                <House aria-hidden="true" className="w-5 h-5 text-sky-600" />
+                No trips planned right now — home in Aggieland.
+              </p>
+            )}
+            <ul className="space-y-5">
+              {travelItems.map((x) => (
+                <li
+                  key={`${x.place}-${x.start}`}
+                  className="rounded-xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5 space-y-3"
+                >
+                  <div className="flex flex-wrap items-center gap-2 justify-between">
+                    <span className="inline-flex items-center gap-2 text-lg font-bold text-gray-950">
+                      <MapPin aria-hidden="true" className="w-5 h-5 text-sky-600" />
+                      {x.place}
+                    </span>
+                    {travelBadge(x)}
+                  </div>
+                  <DateLine start={x.start} end={x.end} />
+                  <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
+                  {x.returnDate && (
+                    <p className="inline-flex items-center gap-1.5 text-sm text-gray-600">
+                      <House aria-hidden="true" className="w-4 h-4" />
+                      Back in {x.returnTo} on {formatRange(x.returnDate)}
+                    </p>
+                  )}
+                  <ReadMore href={x.href} />
+                </li>
               ))}
             </ul>
-          </div>
-        )}
+          </SectionCard>
 
-        <div className="space-y-2">
-          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Participated / Past conferences</h3>
-          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-            {pastEvents.map((x, i) => (
-              <Item key={`past-${i}`} x={x} />
-            ))}
-          </ul>
+          {/* Personal */}
+          <SectionCard
+            icon={Heart}
+            iconClass="bg-rose-100 text-rose-600"
+            title="Personal"
+            subtitle="Life beyond research"
+          >
+            <ul className="space-y-5">
+              {personalItems.map((x) => {
+                const Icon = x.icon;
+                return (
+                  <li key={`${x.start}-${x.text.slice(0, 20)}`} className="flex gap-4">
+                    <div className={`p-2 h-fit rounded-xl flex-shrink-0 ${accents[x.accent]}`}>
+                      <Icon aria-hidden="true" className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-1.5 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <DateLine start={x.start} end={x.end} />
+                        {personalBadge(x)}
+                      </div>
+                      <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </SectionCard>
+
+          {/* Past conferences */}
+          <SectionCard
+            icon={Presentation}
+            iconClass="bg-blue-600/20 text-blue-600"
+            title="Past Conferences"
+            subtitle={`${pastConferences.length} conferences, seminars & courses`}
+            className="lg:col-span-2"
+          >
+            <ol className="relative border-l-2 border-blue-200 ml-2 space-y-6">
+              {pastConferences.map((x) => (
+                <li key={`${x.start}-${x.text.slice(0, 20)}`} className="relative pl-6">
+                  <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow" />
+                  <div className="space-y-1.5">
+                    <DateLine start={x.start} end={x.end} />
+                    <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
+                    <ReadMore href={x.href} />
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </SectionCard>
         </div>
       </div>
     </section>
