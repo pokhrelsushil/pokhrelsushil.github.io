@@ -33,6 +33,12 @@ const News = () => {
     // Personal
     {
       type: "personal",
+      start: "2026-11-02",
+      end: "2026-11-11",
+      text: "Travelling to Taiwan for a conference, returning to Aggieland on 11/12/2026.",
+    },
+    {
+      type: "personal",
       start: "2026-10-18",
       end: "2026-10-18",
       text: "Tied the knot with Subha, my long-time partner, best friend, and the love of my life. After years of growing together, we said \"forever\" and began the most beautiful chapter of our story. ❤️",
@@ -127,11 +133,16 @@ const News = () => {
     return { personalUpdates: personal, pastEvents: past };
   }, []);
 
-  const Item = ({ x, isRecent = false }) => (
+  const Item = ({ x, isRecent = false, isUpcoming = false }) => (
     <li className="leading-snug text-gray-900">
       {isRecent && (
         <span className="inline-block text-xs font-bold uppercase tracking-wide bg-green-100 text-green-800 px-2 py-0.5 rounded mr-2 align-middle">
           Recent
+        </span>
+      )}
+      {isUpcoming && (
+        <span className="inline-block text-xs font-bold uppercase tracking-wide bg-blue-100 text-blue-800 px-2 py-0.5 rounded mr-2 align-middle">
+          Upcoming
         </span>
       )}
       <span className="font-semibold text-gray-950">
@@ -161,7 +172,12 @@ const News = () => {
             <h3 className="text-sm sm:text-base font-semibold text-gray-950">Personal</h3>
             <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
               {personalUpdates.map((x, i) => (
-                <Item key={`personal-${i}`} x={x} isRecent />
+                <Item
+                  key={`personal-${i}`}
+                  x={x}
+                  isRecent={toDate(x.start) <= today}
+                  isUpcoming={toDate(x.start) > today}
+                />
               ))}
             </ul>
           </div>
