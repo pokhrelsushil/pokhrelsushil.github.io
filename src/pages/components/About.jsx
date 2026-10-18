@@ -2,6 +2,37 @@ import React from "react";
 import { Tweet } from "react-tweet";
 import profileImage from "../../assets/sushilpokhrel1.png";
 
+class TweetBoundary extends React.Component {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch(err) {
+    console.warn(`Tweet ${this.props.id} failed to render:`, err);
+  }
+  render() {
+    if (this.state.failed) {
+      return (
+        <a
+          href={`https://x.com/i/status/${this.props.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block p-4 border border-gray-200 rounded-lg text-blue-600 hover:bg-gray-50"
+        >
+          View this post on X →
+        </a>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+const TWEET_IDS = [
+  "2081916313912344695",
+  "2060033555208577106",
+  "2057824543700353432",
+];
+
 const About = () => {
   return (
     <section
@@ -63,7 +94,7 @@ const About = () => {
                   "Deep Learning, Reinforcement Learning, Lifelong Learning & Natural Language Processing ",
                   "Robot Learning & Control Theory",
                   "Complex & Cyber-Physical Systems",
-                  "Materials Science, <Chemical />Biomedical Engineering & Computing",
+                  "Materials Science, Chemical & Biomedical Engineering, Computing",
                 ].map((item) => (
                   <li key={item} className="flex items-start">
                     <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3"></span>
@@ -120,11 +151,14 @@ const About = () => {
                 "
                 style={{ scrollbarWidth: "thin" }}
               >
+              
+
                 <div className="p-4 space-y-6">
-                  <Tweet id="2010741574364479825" />
-                  <Tweet id="2006420126438994042" />
-                  <Tweet id="2006857672063123924" />
-                  <Tweet id="1984297576665854457" />
+                  {TWEET_IDS.map((id) => (
+                    <TweetBoundary key={id} id={id}>
+                      <Tweet id={id} />
+                    </TweetBoundary>
+                  ))}
                 </div>
               </div>
 
@@ -142,7 +176,7 @@ const About = () => {
       </div>
 
       {/* Scrollbar Styles */}
-      <style jsx>{`
+      <style>{`
         .scrollbar-thin::-webkit-scrollbar {
           width: 6px;
         }
