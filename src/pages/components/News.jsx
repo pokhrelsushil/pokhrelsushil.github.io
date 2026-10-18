@@ -12,6 +12,7 @@ const News = () => {
       return `${mm}/${dd}/${yyyy}`;
     };
 
+    if (endISO === "present") return `[${fmt(startISO)}–Present]`;
     if (!endISO || startISO === endISO) return `[${fmt(startISO)}]`;
 
     const s = toDate(startISO);
@@ -29,6 +30,19 @@ const News = () => {
   const today = new Date();
 
   const items = [
+    // Personal
+    {
+      type: "personal",
+      start: "2026-10-18",
+      end: "2026-10-18",
+      text: "Tied the knot with Subha, my long-time partner, best friend, and the love of my life. After years of growing together, we said \"forever\" and began the most beautiful chapter of our story. ❤️",
+    },
+    {
+      type: "personal",
+      start: "2026-08-21",
+      end: "present",
+      text: "Roaming around Aggieland in College Station, Texas.",
+    },
     // Upcoming
     {
       type: "event",
@@ -57,21 +71,6 @@ const News = () => {
       end: "2026-06-12",
       text: "Will be attending the ELLIS Unit Milan: Reinforcement Learning Summer School (RLSS 2026), Milan, Italy.",
       href: "https://ellis.eu/events/ellis-unit-milan-reinforcement-learning-summer-school-2026",
-    },
-    // Publications
-    {
-      type: "publication",
-      start: "2026-02-02",
-      end: "2026-02-02",
-      text: 'Our paper goes online: "Attomolar and beyond: Ultra-sensitive electrochemical biosensors for next-generation detection."',
-      href: "https://www.sciencedirect.com/science/article/pii/S016599362600083X",
-    },
-    {
-      type: "publication",
-      start: "2025-12-01",
-      end: "2025-12-01",
-      text: 'Our paper goes online: "Computational Insight into IFNAR1 Gene Dysfunction: Identification of Deleterious nsSNPs through In-Silico Mutational Analysis."',
-      href: "https://www.sciencedirect.com/science/article/abs/pii/S3050475925010322",
     },
     // Past — CANDU added
     {
@@ -116,15 +115,16 @@ const News = () => {
     },
   ];
 
-  const { upcomingEvents, pastEvents, publications } = useMemo(() => {
+  const { personalUpdates, pastEvents } = useMemo(() => {
     const isPast = (x) => toDate(x.end || x.start) < today;
-    const pubs = items.filter((x) => x.type === "publication");
-    const nonPubs = items.filter((x) => x.type !== "publication");
-    const upcoming = nonPubs.filter((x) => !isPast(x));
-    const past = nonPubs
+    const personal = items
+      .filter((x) => x.type === "personal")
+      .sort((a, b) => toDate(b.start) - toDate(a.start));
+    const past = items
+      .filter((x) => x.type !== "personal")
       .filter((x) => isPast(x))
       .sort((a, b) => toDate(b.end || b.start) - toDate(a.end || a.start));
-    return { upcomingEvents: upcoming, pastEvents: past, publications: pubs };
+    return { personalUpdates: personal, pastEvents: past };
   }, []);
 
   const Item = ({ x, isRecent = false }) => (
@@ -156,25 +156,22 @@ const News = () => {
       <div className="max-w-4xl mx-auto space-y-8">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-950">News</h2>
 
-        <div className="space-y-2">
-          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Upcoming</h3>
-          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-            {upcomingEvents.map((x, i) => <Item key={`up-${i}`} x={x} />)}
-          </ul>
-        </div>
-
-        <div className="space-y-2">
-          <h3 className="text-sm sm:text-base font-semibold text-gray-950">Journal Publications</h3>
-          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
-            {publications.map((x, i) => <Item key={`pub-${i}`} x={x} />)}
-          </ul>
-        </div>
+        {personalUpdates.length > 0 && (
+          <div className="space-y-2">
+            <h3 className="text-sm sm:text-base font-semibold text-gray-950">Personal</h3>
+            <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
+              {personalUpdates.map((x, i) => (
+                <Item key={`personal-${i}`} x={x} isRecent />
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="space-y-2">
           <h3 className="text-sm sm:text-base font-semibold text-gray-950">Participated / Past conferences</h3>
           <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm text-gray-900">
             {pastEvents.map((x, i) => (
-              <Item key={`past-${i}`} x={x} isRecent={i === 0} />
+              <Item key={`past-${i}`} x={x} />
             ))}
           </ul>
         </div>
