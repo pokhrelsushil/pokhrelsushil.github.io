@@ -45,25 +45,25 @@ const conferences = [
   {
     start: "2026-09-27",
     end: "2026-10-01",
-    text: "Will be attending the IEEE/RSJ International Conference on Intelligent Robots & Systems (IROS 2026), Pittsburgh, PA, USA.",
+    text: "Attended the IEEE/RSJ International Conference on Intelligent Robots & Systems (IROS 2026), Pittsburgh, PA, USA.",
     href: "https://2026.ieee-iros.org/program/program-overview/",
   },
   {
     start: "2026-07-06",
     end: "2026-07-10",
-    text: "Will be taking part in The European Summer School on Artificial Intelligence (ESSAI 2026), Vienna, Austria.",
+    text: "Took part in the European Summer School on Artificial Intelligence (ESSAI 2026), Vienna, Austria.",
     href: "https://essai2026.eu/",
   },
   {
     start: "2026-07-01",
     end: "2026-07-04",
-    text: "Will be attending the 18th International Conference on Social Robotics (ICSR 2026), University of London, UK.",
+    text: "Attended the 18th International Conference on Social Robotics (ICSR 2026), University of London, UK.",
     href: "https://icsr2026.uk/",
   },
   {
     start: "2026-06-03",
     end: "2026-06-12",
-    text: "Will be attending the ELLIS Unit Milan: Reinforcement Learning Summer School (RLSS 2026), Milan, Italy.",
+    text: "Attended the ELLIS Unit Milan: Reinforcement Learning Summer School (RLSS 2026), Milan, Italy.",
     href: "https://ellis.eu/events/ellis-unit-milan-reinforcement-learning-summer-school-2026",
   },
   {
@@ -221,7 +221,7 @@ const News = () => {
     const { state, days } = getStatus(x, today);
     if (state === "upcoming")
       return <Badge tone="blue">Upcoming · {days === 1 ? "tomorrow" : `in ${days} days`}</Badge>;
-    if (state === "ongoing") return <Badge tone="amber">On the road</Badge>;
+    if (state === "ongoing") return <Badge tone="amber">In progress</Badge>;
     return <Badge tone="gray">Completed</Badge>;
   };
 
@@ -262,12 +262,12 @@ const News = () => {
             icon={Plane}
             iconClass="bg-sky-100 text-sky-600"
             title="Travel"
-            subtitle="Where I'm headed"
+            subtitle="Academic travel and conference visits"
           >
             {travelItems.length === 0 && (
               <p className="inline-flex items-center gap-2 text-sm sm:text-base text-gray-600">
                 <House aria-hidden="true" className="w-5 h-5 text-sky-600" />
-                No trips planned right now — home in Aggieland.
+                No upcoming travel scheduled.
               </p>
             )}
             <ul className="space-y-5">
@@ -302,7 +302,7 @@ const News = () => {
             icon={Heart}
             iconClass="bg-rose-100 text-rose-600"
             title="Personal"
-            subtitle="Life beyond research"
+            subtitle="Personal milestones"
           >
             <ul className="space-y-5">
               {personalItems.map((x) => {
@@ -330,7 +330,7 @@ const News = () => {
             icon={Presentation}
             iconClass="bg-blue-600/20 text-blue-600"
             title="Past Conferences"
-            subtitle={`${pastConferences.length} conferences, seminars & courses`}
+            subtitle="Conferences, seminars, and professional courses"
             className="lg:col-span-2"
           >
             <ol className="relative border-l-2 border-blue-200 ml-2 space-y-6">
