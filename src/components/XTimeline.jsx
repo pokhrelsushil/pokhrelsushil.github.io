@@ -1,90 +1,85 @@
-// import React from 'react';
+import React, { useEffect, useRef, useState } from "react";
 
-// const XTimeline = () => {
-//   return (
-//     <div className="w-full max-w-[520px] mx-auto bg-gray-900 rounded-2xl overflow-hidden shadow-xl">
-//       {/* Fallback message while loading */}
-//       <div className="flex items-center justify-center h-64 text-gray-400">
-//         Loading recent posts from @sushilpokhrel...
-//       </div>
+const WIDGETS_SRC = "https://platform.x.com/widgets.js";
+// X's empty states ("Nothing to see here", login prompts) render shorter than this.
+const MIN_TIMELINE_HEIGHT = 300;
+const LOAD_TIMEOUT_MS = 10000;
+const SETTLE_MS = 1500;
 
-//       {/* The official embedded timeline */}
-//       <a
-//         className="twitter-timeline block"
-//         href="https://twitter.com/sushilpokhrel"
-//         data-lang="en"
-//         data-theme="dark"
-//         data-width="100%"
-//         data-height="600"               // adjust as needed
-//         data-chrome="noheader nofooter noborders transparent"
-//         data-tweet-limit="10"           // optional: limit visible tweets
-//         data-aria-polite="assertive"
-//       >
-//         Tweets by @sushilpokhrel
-//       </a>
-//     </div>
-//   );
-// };
+let widgetsPromise;
 
-// export default XTimeline;
+const loadWidgets = () => {
+  if (window.twttr?.widgets) return Promise.resolve(window.twttr);
+  widgetsPromise ??= new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = WIDGETS_SRC;
+    script.async = true;
+    script.charset = "utf-8";
+    script.onload = () =>
+      window.twttr?.ready ? window.twttr.ready(resolve) : reject(new Error("X widgets unavailable"));
+    script.onerror = () => {
+      widgetsPromise = undefined;
+      reject(new Error("X widgets blocked"));
+    };
+    document.body.appendChild(script);
+  });
+  return widgetsPromise;
+};
 
-
-
-// **OR
-
-
-import React, { useEffect, useRef } from 'react';
-
-const XTimeline = () => {
+// Live X profile timeline. Shows `fallback` until the timeline has actually
+// rendered posts, and keeps showing it if X fails, is blocked, or comes back empty.
+const XTimeline = ({ username, fallback }) => {
   const containerRef = useRef(null);
+  const [status, setStatus] = useState("loading"); // loading | ready | failed
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const loadTimeline = () => {
-      if (window.twttr?.widgets?.createTimeline) {
-        window.twttr.widgets
-          .createTimeline(
-            {
-              sourceType: 'profile',
-              screenName: 'sushilpokhrel',  // your username without @
-            },
-            containerRef.current,
-            {
-              height: 600,
-              theme: 'dark',
-              chrome: 'noheader nofooter noborders transparent',
-              tweetLimit: 10,
-            }
-          )
-          .then(() => console.log('Timeline loaded'))
-          .catch(err => console.error('Timeline error:', err));
-      }
+    const container = containerRef.current;
+    let done = false;
+    const finish = (next) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timeout);
+      setStatus(next);
     };
+    const timeout = setTimeout(() => finish("failed"), LOAD_TIMEOUT_MS);
 
-    if (window.twttr?.ready) {
-      loadTimeline();
-    } else {
-      window.twttr = window.twttr || [];
-      window.twttr.ready = loadTimeline;
-    }
+    loadWidgets()
+      .then((twttr) =>
+        twttr.widgets.createTimeline({ sourceType: "profile", screenName: username }, container, {
+          chrome: "noheader nofooter noborders transparent",
+          dnt: true,
+        })
+      )
+      .then((el) => {
+        // Give the iframe a moment to size itself before judging whether it has posts.
+        setTimeout(() => {
+          finish(el && el.offsetHeight >= MIN_TIMELINE_HEIGHT ? "ready" : "failed");
+        }, SETTLE_MS);
+      })
+      .catch(() => finish("failed"));
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = '';
-      }
+      done = true;
+      clearTimeout(timeout);
+      container.innerHTML = "";
     };
-  }, []);
+  }, [username]);
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full max-w-[520px] mx-auto bg-gray-900 rounded-2xl overflow-hidden shadow-xl"
-      style={{ minHeight: '600px' }}
-    >
-      <div className="flex items-center justify-center h-64 text-gray-400">
-        Loading recent posts...
-      </div>
+    <div className="relative">
+      {/* Rendered invisibly while loading so the iframe can lay out and be measured. */}
+      <div
+        ref={containerRef}
+        aria-hidden={status !== "ready"}
+        className={
+          status === "ready"
+            ? ""
+            : status === "loading"
+              ? "absolute inset-x-0 top-0 invisible pointer-events-none"
+              : "hidden"
+        }
+      />
+      {status !== "ready" && fallback}
     </div>
   );
 };

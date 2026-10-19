@@ -1,5 +1,6 @@
 import React from "react";
 import { Tweet } from "react-tweet";
+import XTimeline from "../../components/XTimeline";
 import profileImage from "../../assets/sushilpokhrel1.png";
 
 class TweetBoundary extends React.Component {
@@ -151,15 +152,18 @@ const About = () => {
                 "
                 style={{ scrollbarWidth: "thin" }}
               >
-              
-
-                <div className="p-4 space-y-6">
-                  {TWEET_IDS.map((id) => (
-                    <TweetBoundary key={id} id={id}>
-                      <Tweet id={id} />
-                    </TweetBoundary>
-                  ))}
-                </div>
+                <XTimeline
+                  username="sushilpokhrel"
+                  fallback={
+                    <div className="p-4 space-y-6">
+                      {TWEET_IDS.map((id) => (
+                        <TweetBoundary key={id} id={id}>
+                          <Tweet id={id} />
+                        </TweetBoundary>
+                      ))}
+                    </div>
+                  }
+                />
               </div>
 
               <a
