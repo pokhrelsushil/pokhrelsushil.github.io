@@ -29,7 +29,8 @@ const personal = [
     end: "2026-10-18",
     icon: Heart,
     accent: "rose",
-    text: 'Tied the knot with Subha, my long-time partner, best friend, and the love of my life. After years of growing together, we said "forever" and began the most beautiful chapter of our story. ❤️',
+    badge: "Life Event",
+    text: "Married my long-time partner, Subha, beginning a lifelong partnership built on years of shared growth. Deeply grateful for Subha's unwavering support and companionship through every chapter of this journey.",
   },
   {
     start: "2026-08-21",
@@ -143,6 +144,7 @@ const Badge = ({ tone, children }) => {
     amber: "bg-amber-100 text-amber-800",
     green: "bg-green-100 text-green-800",
     gray: "bg-gray-100 text-gray-700",
+    rose: "bg-rose-100 text-rose-700",
   };
   return (
     <span
@@ -224,6 +226,7 @@ const News = () => {
   };
 
   const personalBadge = (x) => {
+    if (x.badge) return <Badge tone="rose">{x.badge}</Badge>;
     const { state, days } = getStatus(x, today);
     if (state === "upcoming") return <Badge tone="blue">Upcoming</Badge>;
     if (state === "ongoing") return <Badge tone="green">Current</Badge>;
