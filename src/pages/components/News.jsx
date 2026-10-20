@@ -42,6 +42,77 @@ const personal = [
 ];
 
 const conferences = [
+  // Entries with `event` + `place` get tense-aware text: Will be attending → Attending → Attended.
+  {
+    start: "2026-12-14",
+    end: "2026-12-17",
+    event: "the IEEE International Conference on Big Data (IEEE BigData 2026)",
+    place: "Sheraton Phoenix Downtown, Phoenix, AZ, USA",
+    href: "https://bigdataieee.org/BigData2026/",
+  },
+  {
+    start: "2026-12-09",
+    end: "2026-12-10",
+    event: "The AI Summit New York 2026",
+    place: "Javits Center, New York City, NY, USA",
+    href: "https://newyork.theaisummit.com",
+  },
+  {
+    start: "2026-12-09",
+    end: "2026-12-13",
+    event: "the Conference on Neural Information Processing Systems (NeurIPS 2026), US Satellite Hub",
+    place: "Atlanta, GA, USA",
+    href: "https://neurips.cc",
+  },
+  {
+    start: "2026-11-30",
+    end: "2026-12-04",
+    event: "AWS re:Invent 2026",
+    place: "The Venetian, Las Vegas, NV, USA",
+    href: "https://aws.amazon.com/events/reinvent/pricing/",
+  },
+  {
+    start: "2026-11-30",
+    end: "2026-12-03",
+    event: "NVIDIA GTC Washington, D.C. 2026",
+    place: "Walter E. Washington Convention Center, Washington, D.C., USA",
+    href: "https://www.nvidia.com/gtc/dc/conference-schedule/",
+  },
+  {
+    start: "2026-11-17",
+    end: "2026-11-18",
+    event: "MLOps World / GenAI Summit 2026",
+    place: "Etter-Harbin Alumni Center, Austin, TX, USA",
+    href: "https://mlopsworld.com/",
+  },
+  {
+    start: "2026-11-09",
+    end: "2026-11-12",
+    event: "the Conference on Robot Learning (CoRL 2026)",
+    place: "JW Marriott Austin, Austin, TX, USA",
+    href: "https://www.corl.org",
+  },
+  {
+    start: "2026-10-27",
+    end: "2026-10-29",
+    event: "ODSC AI West 2026",
+    place: "Hyatt Regency San Francisco Airport, Burlingame, CA, USA",
+    href: "https://odsc.ai/west/",
+  },
+  {
+    start: "2026-10-22",
+    end: "2026-10-23",
+    event: "AGNTCon + MCPCon North America 2026",
+    place: "San Jose Convention Center, San Jose, CA, USA",
+    href: "https://events.linuxfoundation.org/agntcon-mcpcon-north-america/",
+  },
+  {
+    start: "2026-10-20",
+    end: "2026-10-21",
+    event: "the PyTorch Conference 2026",
+    place: "San Jose Convention Center, San Jose, CA, USA",
+    href: "https://pytorch.org/blog/pytorch-conference-north-america-announces-2026-keynotes/",
+  },
   {
     start: "2026-09-27",
     end: "2026-10-01",
@@ -137,6 +208,13 @@ const getStatus = (x, today) => {
 };
 
 const byStartDesc = (a, b) => toDate(b.start) - toDate(a.start);
+const byStartAsc = (a, b) => toDate(a.start) - toDate(b.start);
+
+const conferenceText = (x, state) => {
+  if (!x.event) return x.text;
+  const verb = { upcoming: "Will be attending", ongoing: "Attending", past: "Attended" }[state];
+  return `${verb} ${x.event}, ${x.place}.`;
+};
 
 const Badge = ({ tone, children }) => {
   const tones = {
@@ -210,8 +288,13 @@ const News = () => {
 
   const travelItems = travel.filter((x) => !isPast(x)).sort(byStartDesc);
   const personalItems = [...personal].sort(byStartDesc);
+  const withText = (x) => ({ ...x, text: conferenceText(x, getStatus(x, today).state) });
+  const upcomingConferences = conferences
+    .filter((x) => !isPast(x))
+    .map(withText)
+    .sort(byStartAsc);
   const pastConferences = [
-    ...conferences,
+    ...conferences.map(withText),
     ...travel.filter((x) => x.pastText).map((x) => ({ ...x, text: x.pastText })),
   ]
     .filter(isPast)
@@ -324,6 +407,33 @@ const News = () => {
               })}
             </ul>
           </SectionCard>
+
+          {/* Upcoming conferences */}
+          {upcomingConferences.length > 0 && (
+            <SectionCard
+              icon={CalendarDays}
+              iconClass="bg-sky-100 text-sky-600"
+              title="Upcoming Conferences"
+              subtitle="Scheduled conference attendance"
+              className="lg:col-span-2"
+            >
+              <ol className="relative border-l-2 border-sky-200 ml-2 space-y-6">
+                {upcomingConferences.map((x) => (
+                  <li key={`${x.start}-${x.text.slice(0, 20)}`} className="relative pl-6">
+                    <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-sky-500 border-4 border-white shadow" />
+                    <div className="space-y-1.5">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <DateLine start={x.start} end={x.end} />
+                        {travelBadge(x)}
+                      </div>
+                      <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
+                      <ReadMore href={x.href} />
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </SectionCard>
+          )}
 
           {/* Past conferences */}
           <SectionCard
