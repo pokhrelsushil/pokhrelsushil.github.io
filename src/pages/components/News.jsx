@@ -2,27 +2,14 @@ import React, { useEffect, useState } from "react";
 import {
   CalendarDays,
   ExternalLink,
+  Globe,
   Heart,
   House,
   MapPin,
-  Plane,
   Presentation,
 } from "lucide-react";
 
 // Dates are ISO strings (YYYY-MM-DD). Use end: "present" for ongoing items.
-// Trips with a pastText move into Past Conferences automatically once they end.
-const travel = [
-  {
-    start: "2026-11-02",
-    end: "2026-11-11",
-    place: "Taiwan",
-    text: "Travelling to Taiwan for a conference.",
-    pastText: "Attended a conference in Taiwan.",
-    returnDate: "2026-11-12",
-    returnTo: "Aggieland",
-  },
-];
-
 const personal = [
   {
     start: "2026-10-18",
@@ -41,8 +28,24 @@ const personal = [
   },
 ];
 
+// Entries with `event` + `place` (or `texts`) get tense-aware wording that switches
+// automatically: Will be attending → Attending → Attended. Upcoming entries are
+// grouped by `international`, and everything moves to Past Conferences once it ends.
 const conferences = [
-  // Entries with `event` + `place` get tense-aware text: Will be attending → Attending → Attended.
+  {
+    start: "2026-11-02",
+    end: "2026-11-11",
+    international: true,
+    texts: {
+      upcoming:
+        "Will be visiting AI, semiconductor (chip), and smart-technology research laboratories in Taiwan, including National Chung Hsing University (NCHU), Taichung, where I will give a research presentation.",
+      ongoing:
+        "Visiting AI, semiconductor (chip), and smart-technology research laboratories in Taiwan, including National Chung Hsing University (NCHU), Taichung, where I am giving a research presentation.",
+      past: "Visited AI, semiconductor (chip), and smart-technology research laboratories in Taiwan, including National Chung Hsing University (NCHU), Taichung, where I gave a research presentation.",
+    },
+    note: "Returning to Aggieland on Nov 12, 2026.",
+    href: "https://www.nchu.edu.tw/en-index",
+  },
   {
     start: "2026-12-14",
     end: "2026-12-17",
@@ -211,6 +214,7 @@ const byStartDesc = (a, b) => toDate(b.start) - toDate(a.start);
 const byStartAsc = (a, b) => toDate(a.start) - toDate(b.start);
 
 const conferenceText = (x, state) => {
+  if (x.texts) return x.texts[state];
   if (!x.event) return x.text;
   const verb = { upcoming: "Will be attending", ongoing: "Attending", past: "Attended" }[state];
   return `${verb} ${x.event}, ${x.place}.`;
@@ -270,6 +274,42 @@ const SectionCard = ({ icon, iconClass, title, subtitle, children, className = "
   );
 };
 
+const Timeline = ({ items, tone, renderBadge }) => (
+  <ol className={`relative border-l-2 ml-2 space-y-6 ${tone === "sky" ? "border-sky-200" : "border-blue-200"}`}>
+    {items.map((x) => (
+      <li key={`${x.start}-${x.text.slice(0, 20)}`} className="relative pl-6">
+        <span
+          className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 border-white shadow ${tone === "sky" ? "bg-sky-500" : "bg-blue-500"}`}
+        />
+        <div className="space-y-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <DateLine start={x.start} end={x.end} />
+            {renderBadge?.(x)}
+          </div>
+          <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
+          {x.note && !x.isPast && (
+            <p className="inline-flex items-center gap-1.5 text-sm text-gray-600">
+              <House aria-hidden="true" className="w-4 h-4" />
+              {x.note}
+            </p>
+          )}
+          <ReadMore href={x.href} />
+        </div>
+      </li>
+    ))}
+  </ol>
+);
+
+const GroupHeading = ({ icon, children }) => {
+  const Icon = icon;
+  return (
+    <h4 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gray-500 mb-4">
+      <Icon aria-hidden="true" className="w-4 h-4" />
+      {children}
+    </h4>
+  );
+};
+
 // Re-renders at local midnight so countdowns stay correct on a page left open.
 const useToday = () => {
   const [today, setToday] = useState(startOfToday);
@@ -284,23 +324,18 @@ const useToday = () => {
 
 const News = () => {
   const today = useToday();
-  const isPast = (x) => getStatus(x, today).state === "past";
 
-  const travelItems = travel.filter((x) => !isPast(x)).sort(byStartDesc);
   const personalItems = [...personal].sort(byStartDesc);
-  const withText = (x) => ({ ...x, text: conferenceText(x, getStatus(x, today).state) });
-  const upcomingConferences = conferences
-    .filter((x) => !isPast(x))
-    .map(withText)
-    .sort(byStartAsc);
-  const pastConferences = [
-    ...conferences.map(withText),
-    ...travel.filter((x) => x.pastText).map((x) => ({ ...x, text: x.pastText })),
-  ]
-    .filter(isPast)
-    .sort(byStartDesc);
+  const withText = (x) => {
+    const { state } = getStatus(x, today);
+    return { ...x, text: conferenceText(x, state), isPast: state === "past" };
+  };
+  const upcoming = conferences.map(withText).filter((x) => !x.isPast).sort(byStartAsc);
+  const upcomingInternational = upcoming.filter((x) => x.international);
+  const upcomingDomestic = upcoming.filter((x) => !x.international);
+  const pastConferences = conferences.map(withText).filter((x) => x.isPast).sort(byStartDesc);
 
-  const travelBadge = (x) => {
+  const statusBadge = (x) => {
     const { state, days } = getStatus(x, today);
     if (state === "upcoming")
       return <Badge tone="blue">Upcoming · {days === 1 ? "tomorrow" : `in ${days} days`}</Badge>;
@@ -340,45 +375,31 @@ const News = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
-          {/* Travel */}
-          <SectionCard
-            icon={Plane}
-            iconClass="bg-sky-100 text-sky-600"
-            title="Travel"
-            subtitle="Academic travel and conference visits"
-          >
-            {travelItems.length === 0 && (
-              <p className="inline-flex items-center gap-2 text-sm sm:text-base text-gray-600">
-                <House aria-hidden="true" className="w-5 h-5 text-sky-600" />
-                No upcoming travel scheduled.
-              </p>
-            )}
-            <ul className="space-y-5">
-              {travelItems.map((x) => (
-                <li
-                  key={`${x.place}-${x.start}`}
-                  className="rounded-xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5 space-y-3"
-                >
-                  <div className="flex flex-wrap items-center gap-2 justify-between">
-                    <span className="inline-flex items-center gap-2 text-lg font-bold text-gray-950">
-                      <MapPin aria-hidden="true" className="w-5 h-5 text-sky-600" />
-                      {x.place}
-                    </span>
-                    {travelBadge(x)}
+          {/* Upcoming conferences & research visits */}
+          {upcoming.length > 0 && (
+            <SectionCard
+              icon={CalendarDays}
+              iconClass="bg-sky-100 text-sky-600"
+              title="Upcoming Conferences & Research Visits"
+              subtitle="Scheduled conferences and laboratory visits"
+              className="lg:col-span-2"
+            >
+              <div className="space-y-8">
+                {upcomingInternational.length > 0 && (
+                  <div>
+                    <GroupHeading icon={Globe}>International</GroupHeading>
+                    <Timeline items={upcomingInternational} tone="sky" renderBadge={statusBadge} />
                   </div>
-                  <DateLine start={x.start} end={x.end} />
-                  <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
-                  {x.returnDate && (
-                    <p className="inline-flex items-center gap-1.5 text-sm text-gray-600">
-                      <House aria-hidden="true" className="w-4 h-4" />
-                      Back in {x.returnTo} on {formatRange(x.returnDate)}
-                    </p>
-                  )}
-                  <ReadMore href={x.href} />
-                </li>
-              ))}
-            </ul>
-          </SectionCard>
+                )}
+                {upcomingDomestic.length > 0 && (
+                  <div>
+                    <GroupHeading icon={MapPin}>United States</GroupHeading>
+                    <Timeline items={upcomingDomestic} tone="sky" renderBadge={statusBadge} />
+                  </div>
+                )}
+              </div>
+            </SectionCard>
+          )}
 
           {/* Personal */}
           <SectionCard
@@ -386,6 +407,7 @@ const News = () => {
             iconClass="bg-rose-100 text-rose-600"
             title="Personal"
             subtitle="Personal milestones"
+            className="lg:col-span-2"
           >
             <ul className="space-y-5">
               {personalItems.map((x) => {
@@ -408,53 +430,15 @@ const News = () => {
             </ul>
           </SectionCard>
 
-          {/* Upcoming conferences */}
-          {upcomingConferences.length > 0 && (
-            <SectionCard
-              icon={CalendarDays}
-              iconClass="bg-sky-100 text-sky-600"
-              title="Upcoming Conferences"
-              subtitle="Scheduled conference attendance"
-              className="lg:col-span-2"
-            >
-              <ol className="relative border-l-2 border-sky-200 ml-2 space-y-6">
-                {upcomingConferences.map((x) => (
-                  <li key={`${x.start}-${x.text.slice(0, 20)}`} className="relative pl-6">
-                    <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-sky-500 border-4 border-white shadow" />
-                    <div className="space-y-1.5">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <DateLine start={x.start} end={x.end} />
-                        {travelBadge(x)}
-                      </div>
-                      <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
-                      <ReadMore href={x.href} />
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </SectionCard>
-          )}
-
           {/* Past conferences */}
           <SectionCard
             icon={Presentation}
             iconClass="bg-blue-600/20 text-blue-600"
             title="Past Conferences"
-            subtitle="Conferences, seminars, and professional courses"
+            subtitle="Conferences, seminars, research visits, and professional courses"
             className="lg:col-span-2"
           >
-            <ol className="relative border-l-2 border-blue-200 ml-2 space-y-6">
-              {pastConferences.map((x) => (
-                <li key={`${x.start}-${x.text.slice(0, 20)}`} className="relative pl-6">
-                  <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 border-4 border-white shadow" />
-                  <div className="space-y-1.5">
-                    <DateLine start={x.start} end={x.end} />
-                    <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{x.text}</p>
-                    <ReadMore href={x.href} />
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <Timeline items={pastConferences} tone="blue" />
           </SectionCard>
         </div>
       </div>
