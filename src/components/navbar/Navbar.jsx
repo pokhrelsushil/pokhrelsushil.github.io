@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
-import { FaXTwitter } from "react-icons/fa6";
-import GoogleScholarIcon from "../../components/GoogleScholarIcon";
+import { Menu, X } from "lucide-react";
+import SocialLinks from "../SocialLinks";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -39,38 +38,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Social icons (external links stay as <a>) */}
             <div className="pt-1 md:pt-0.5">
-              <div className="flex flex-wrap justify-center lg:justify-start gap-1 sm:gap-1">
-                {[
-                  {
-                  icon: GoogleScholarIcon,
-                    label: "Google Scholar",
-                    href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
-                  },
-                  {
-                    icon: Linkedin,
-                    label: "LinkedIn",
-                    href: "https://www.linkedin.com/in/sushilpokhrel/",
-                  },
-                  { icon: Github, label: "GitHub", href: "https://github.com/pokhrelsushil/" },
-                  {
-                    icon: Mail,
-                    label: "Email",
-                    href: "https://mail.google.com/mail/u/0/#compose?to=sushil.pokhrel@gmail.com",
-                  },
-                  { icon: FaXTwitter, label: "X", href: "https://x.com/sushilpokhrel", isReactIcon: true },
-                ].map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative p-3 sm:p-3.5 text-black hover:text-blue-700"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={social.isReactIcon ? 0 : 2.1} />
-                  </a>
-                ))}
-              </div>
+              <SocialLinks className="justify-center lg:justify-start" iconClassName="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
 
             {/* Desktop Navigation */}

@@ -2,11 +2,9 @@ import React, { useRef, useState } from "react";
 import {
   Mail,
   MapPin,
-  Github,
-  Linkedin,
   SendIcon,
 } from "lucide-react";
-import { FaGoogleScholar, FaXTwitter } from "react-icons/fa6";
+import SocialLinks from "../../components/SocialLinks";
 import emailjs from "@emailjs/browser";
 
 const Contact = () => {
@@ -116,36 +114,11 @@ const Contact = () => {
             </div>
 
             {/* Social Icons */}
-            <div className="flex gap-4 md:gap-6 mt-10 md:mt-14">
-              <a
-                href="https://www.linkedin.com/in/sushilpokhrel/"
-                className="p-3 md:p-4 bg-blue-600/30 rounded-2xl hover:scale-110 transition-all duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-6 h-6 md:w-8 md:h-8 text-blue-500 hover:text-blue-700" />
-              </a>
-              <a
-                href="https://github.com/pokhrelsushil/"
-                className="p-3 md:p-4 bg-blue-600/30 rounded-2xl hover:scale-110 transition-all duration-300"
-                aria-label="GitHub"
-              >
-                <Github className="w-6 h-6 md:w-8 md:h-8 text-blue-500 hover:text-blue-700" />
-              </a>
-              <a
-                href="https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en"
-                className="p-3 md:p-4 bg-blue-600/30 rounded-2xl hover:scale-110 transition-all duration-300"
-                aria-label="Google Scholar"
-              >
-                <FaGoogleScholar className="w-6 h-6 md:w-8 md:h-8 text-blue-500 hover:text-blue-700" />
-              </a>
-              <a
-                href="https://x.com/sushilpokhrel"
-                className="p-3 md:p-4 bg-blue-600/30 rounded-2xl hover:scale-110 transition-all duration-300"
-                aria-label="X"
-              >
-                <FaXTwitter className="w-6 h-6 md:w-8 md:h-8 text-blue-500 hover:text-blue-700" />
-              </a>
-            </div>
+            <SocialLinks
+              className="gap-5 md:gap-6 mt-10 md:mt-14"
+              iconClassName="w-7 h-7 md:w-9 md:h-9"
+              exclude={["email"]}
+            />
           </div>
 
           {/* Right: Send Message Form */}

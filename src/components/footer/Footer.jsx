@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Mail, MapPin, Github, Linkedin } from "lucide-react";
-import { FaGoogleScholar, FaXTwitter } from "react-icons/fa6";
+import { Mail, MapPin } from "lucide-react";
+import SocialLinks from "../SocialLinks";
 
 const Footer = () => {
   const quickLinks = [
@@ -44,57 +44,7 @@ const Footer = () => {
             </div>
 
             {/* Social Icons - external links stay as <a> */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-3">
-              <a
-                href="https://www.linkedin.com/in/sushilpokhrel/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 sm:p-3.5 bg-blue-900/30 rounded-xl text-blue-500 hover:text-blue-700 hover:shadow-md hover:scale-110 transition-all duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-6 h-6 sm:w-7 sm:h-7" />
-              </a>
-
-              <a
-                href="https://github.com/pokhrelsushil/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 sm:p-3.5 bg-blue-900/30 rounded-xl text-blue-500 hover:text-blue-700 hover:shadow-md hover:scale-110 transition-all duration-300"
-                aria-label="GitHub"
-              >
-                <Github className="w-6 h-6 sm:w-7 sm:h-7" />
-              </a>
-
-              <a
-                href="https://mail.google.com/mail/u/0/#compose?to=sushil.pokhrel@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 sm:p-3.5 bg-blue-900/30 rounded-xl text-blue-500 hover:text-blue-700 hover:shadow-md hover:scale-110 transition-all duration-300"
-                aria-label="Email"
-              >
-                <Mail className="w-6 h-6 sm:w-7 sm:h-7" />
-              </a>
-
-              <a
-                href="https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 sm:p-3.5 bg-blue-900/30 rounded-xl text-blue-500 hover:text-blue-700 hover:shadow-md hover:scale-110 transition-all duration-300"
-                aria-label="Google Scholar"
-              >
-                <FaGoogleScholar className="w-6 h-6 sm:w-7 sm:h-7" />
-              </a>
-
-              <a
-                href="https://x.com/sushilpokhrel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 sm:p-3.5 bg-blue-900/30 rounded-xl text-blue-500 hover:text-blue-700 hover:shadow-md hover:scale-110 transition-all duration-300"
-                aria-label="X"
-              >
-                <FaXTwitter className="w-6 h-6 sm:w-7 sm:h-7" />
-              </a>
-            </div>
+            <SocialLinks className="justify-center lg:justify-start gap-5" />
           </div>
 
           {/* Quick Links - internal links: Link */}

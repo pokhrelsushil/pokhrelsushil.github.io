@@ -1,10 +1,9 @@
 import React from "react";
-import { ArrowRight, Github, GraduationCap, Linkedin, Mail, School } from "lucide-react";
-import { FaXTwitter } from "react-icons/fa6";
+import { ArrowRight, Mail } from "lucide-react";
+import SocialLinks from "../../components/SocialLinks";
 
 //import ScrollToExplore from "../../components/ScrollToExplore";
 import profileImage from "../../assets/sushilpokhrel.jpg";
-import GoogleScholarIcon from "../../components/GoogleScholarIcon";
 
 const Hero = () => {
   const handleSmoothScroll = (e, id) => {
@@ -17,22 +16,6 @@ const Hero = () => {
 
   
 
-  const socials = [
-    {
-      icon: GoogleScholarIcon,
-      label: "Google Scholar",
-      href: "https://scholar.google.com/citations?user=BPN7wnsAAAAJ&hl=en",
-      isReactIcon: true,
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/sushilpokhrel/",
-    },
-    { icon: Github, label: "GitHub", href: "https://github.com/pokhrelsushil/" },
-    { icon: Mail, label: "Email", href: "mailto:sushil.pokhrel@gmail.com" },
-    { icon: FaXTwitter, label: "X", href: "https://x.com/sushilpokhrel", isReactIcon: true },
-  ];
 
   return (
     <section
@@ -96,39 +79,7 @@ const Hero = () => {
                 Follow me on:
               </p>
 
-              <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2">
-                {socials.map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative p-3 sm:p-3.5
-                                 bg-white backdrop-blur-sm
-                                 border border-gray-400
-                                 rounded-xl sm:rounded-2xl
-                                 hover:border-blue-400/50
-                                 hover:shadow-md hover:shadow-blue-500/20
-                                 transition-all duration-300
-                                 hover:-translate-y-1 active:scale-95"
-                      aria-label={social.label}
-                      title={social.label}
-                    >
-                      {social.isReactIcon ? (
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                      ) : (
-                        <Icon
-                          className="w-6 h-6 sm:w-7 sm:h-7"
-                          strokeWidth={2.1}
-                          aria-hidden="true"
-                        />
-                      )}
-                    </a>
-                  );
-                })}
-              </div>
+              <SocialLinks className="justify-center lg:justify-start gap-5" iconClassName="w-8 h-8" />
             </div>
           </div>
 
