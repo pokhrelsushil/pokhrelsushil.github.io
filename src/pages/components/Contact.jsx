@@ -4,10 +4,9 @@ import {
   MapPin,
   Github,
   Linkedin,
-  Twitter,
   SendIcon,
 } from "lucide-react";
-import { FaGoogleScholar } from "react-icons/fa6";
+import { FaGoogleScholar, FaXTwitter } from "react-icons/fa6";
 import emailjs from "@emailjs/browser";
 
 const Contact = () => {
@@ -142,9 +141,9 @@ const Contact = () => {
               <a
                 href="https://x.com/sushilpokhrel"
                 className="p-3 md:p-4 bg-blue-600/30 rounded-2xl hover:scale-110 transition-all duration-300"
-                aria-label="Twitter"
+                aria-label="X"
               >
-                <Twitter className="w-6 h-6 md:w-8 md:h-8 text-blue-500 hover:text-blue-700" />
+                <FaXTwitter className="w-6 h-6 md:w-8 md:h-8 text-blue-500 hover:text-blue-700" />
               </a>
             </div>
           </div>

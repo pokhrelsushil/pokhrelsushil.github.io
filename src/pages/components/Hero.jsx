@@ -1,5 +1,6 @@
 import React from "react";
-import { ArrowRight, Github, GraduationCap, Linkedin, Mail, School, Twitter } from "lucide-react";
+import { ArrowRight, Github, GraduationCap, Linkedin, Mail, School } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
 
 //import ScrollToExplore from "../../components/ScrollToExplore";
 import profileImage from "../../assets/sushilpokhrel.jpg";
@@ -30,7 +31,7 @@ const Hero = () => {
     },
     { icon: Github, label: "GitHub", href: "https://github.com/pokhrelsushil/" },
     { icon: Mail, label: "Email", href: "mailto:sushil.pokhrel@gmail.com" },
-    { icon: Twitter, label: "Twitter/X", href: "https://x.com/sushilpokhrel" },
+    { icon: FaXTwitter, label: "X", href: "https://x.com/sushilpokhrel", isReactIcon: true },
   ];
 
   return (

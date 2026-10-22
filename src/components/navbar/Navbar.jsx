@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Github, Linkedin, Mail, Menu, Twitter, X } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
 import GoogleScholarIcon from "../../components/GoogleScholarIcon";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -56,7 +57,7 @@ const Navbar = () => {
                     label: "Email",
                     href: "https://mail.google.com/mail/u/0/#compose?to=sushil.pokhrel@gmail.com",
                   },
-                  { icon: Twitter, label: "Twitter", href: "https://x.com/sushilpokhrel" },
+                  { icon: FaXTwitter, label: "X", href: "https://x.com/sushilpokhrel", isReactIcon: true },
                 ].map((social, index) => (
                   <a
                     key={index}
@@ -66,7 +67,7 @@ const Navbar = () => {
                     className="group relative p-3 sm:p-3.5 text-black hover:text-blue-700"
                     aria-label={social.label}
                   >
-                    <social.icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2.1} />
+                    <social.icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={social.isReactIcon ? 0 : 2.1} />
                   </a>
                 ))}
               </div>

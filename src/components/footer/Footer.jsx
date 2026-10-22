@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Github, Linkedin } from "lucide-react";
-import { FaGoogleScholar } from "react-icons/fa6";
+import { FaGoogleScholar, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   const quickLinks = [
@@ -44,7 +44,7 @@ const Footer = () => {
             </div>
 
             {/* Social Icons - external links stay as <a> */}
-            <div className="flex justify-center lg:justify-start gap-4 sm:gap-3">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-3">
               <a
                 href="https://www.linkedin.com/in/sushilpokhrel/"
                 target="_blank"
@@ -83,6 +83,16 @@ const Footer = () => {
                 aria-label="Google Scholar"
               >
                 <FaGoogleScholar className="w-6 h-6 sm:w-7 sm:h-7" />
+              </a>
+
+              <a
+                href="https://x.com/sushilpokhrel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 sm:p-3.5 bg-blue-900/30 rounded-xl text-blue-500 hover:text-blue-700 hover:shadow-md hover:scale-110 transition-all duration-300"
+                aria-label="X"
+              >
+                <FaXTwitter className="w-6 h-6 sm:w-7 sm:h-7" />
               </a>
             </div>
           </div>
