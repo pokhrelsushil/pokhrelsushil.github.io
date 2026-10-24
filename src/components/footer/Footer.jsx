@@ -38,8 +38,8 @@ const Footer = () => {
               </Link>
 
               <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-sm mx-auto lg:mx-0 mt-2">
-                Interdisciplinary researcher in materials science, engineering,
-                robotics, and machine learning.
+                Interdisciplinary researcher in robotics, quantum computing,
+                machine learning, and materials science and engineering.
               </p>
             </div>
 
@@ -69,15 +69,16 @@ const Footer = () => {
           {/* Research Interests */}
           <div className="text-center lg:text-left">
             <h4 className="text-xl sm:text-2xl font-semibold text-black mb-6">
-              Research -Interests
+              Research Interests
             </h4>
             <ul className="space-y-4 inline-block">
               {[
-                "Human–AI Interaction",
+                "Robotics, Robot Learning & Control Theory",
+                "Quantum Computing & Quantum Chemistry",
                 "Reinforcement Learning & Autonomous Agents",
-                "Robot Learning/Control Theory",
+                "Human–AI Interaction",
                 "Complex Systems Design/CPS",
-                "Material Science and Computing",
+                "Materials Science and Computing",
               ].map((interests) => (
                 <li key={interests}>
                   <span className="text-base sm:text-lg text-gray-600 hover:text-blue-500 transition-colors duration-300 cursor-pointer block">

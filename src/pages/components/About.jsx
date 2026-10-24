@@ -74,9 +74,9 @@ const About = () => {
 
               <p className="text-lg text-gray-700 leading-relaxed">
                 Interdisciplinary researcher specializing in the convergence of
-                materials science, computing, chemical engineering, electrical
-                engineering, robotics, biomedical engineering, and machine
-                learning. My research focuses on bridging theoretical
+                robotics, quantum computing, machine learning, materials
+                science, computing, chemical engineering, electrical
+                engineering, and biomedical engineering. My research focuses on bridging theoretical
                 foundations with practical applications to address complex
                 real-world challenges through innovative, cross-disciplinary
                 approaches.
@@ -93,7 +93,8 @@ const About = () => {
                 {[
                   "Human–AI Interaction (HRI, HCI), autonomous agents",
                   "Deep Learning, Reinforcement Learning, Lifelong Learning & Natural Language Processing ",
-                  "Robot Learning & Control Theory",
+                  "Robotics, Robot Learning & Control Theory",
+                  "Quantum Computing & Quantum Chemistry",
                   "Complex & Cyber-Physical Systems",
                   "Materials Science, Chemical & Biomedical Engineering, Computing",
                 ].map((item) => (
