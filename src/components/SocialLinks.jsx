@@ -13,6 +13,9 @@ const GoogleScholarIcon = (props) => (
   </svg>
 );
 
+// GitHub and X use their own black brand color; the rest use the site accent.
+const BRAND_BLACK = "text-[#181717] hover:text-[#444]";
+
 const SOCIALS = [
   {
     key: "scholar",
@@ -24,6 +27,7 @@ const SOCIALS = [
     key: "github",
     icon: FaGithub,
     label: "GitHub",
+    colorClassName: BRAND_BLACK,
     href: "https://github.com/pokhrelsushil/",
   },
   {
@@ -36,6 +40,7 @@ const SOCIALS = [
     key: "x",
     icon: FaXTwitter,
     label: "X",
+    colorClassName: BRAND_BLACK,
     href: "https://x.com/sushilpokhrel",
   },
   {
@@ -54,7 +59,13 @@ const SocialLinks = ({
 }) => (
   <div className={`flex flex-wrap items-center gap-4 ${className}`}>
     {SOCIALS.filter((s) => !exclude.includes(s.key)).map(
-      ({ key, icon, label, href }) => {
+      ({
+        key,
+        icon,
+        label,
+        href,
+        colorClassName = "text-[#1095c1] hover:text-[#0b6d8f]",
+      }) => {
         const Icon = icon;
         return (
           <a
@@ -64,7 +75,7 @@ const SocialLinks = ({
             rel="noopener noreferrer"
             aria-label={label}
             title={label}
-            className="text-[#1095c1] hover:text-[#0b6d8f] transition-colors duration-200"
+            className={`${colorClassName} transition-colors duration-200`}
           >
             <Icon className={iconClassName} aria-hidden="true" />
           </a>

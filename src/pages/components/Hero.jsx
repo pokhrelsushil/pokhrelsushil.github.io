@@ -37,13 +37,13 @@ const Hero = () => {
 
             {/* Title */}
             <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700">
-              Robotics || Quantum || Machine Learning Researcher
+              Robotics || Materials Science and Engineering || Machine Learning Researcher
             </h2>
 
             {/* Description */}
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Interdisciplinary researcher working at the intersection of robotics, quantum computing, machine learning,
-              materials science and engineering, autonomous and cyber–physical systems, and control to address
+              Interdisciplinary researcher working at the intersection of robotics, materials science and engineering,
+              quantum computing, machine learning, autonomous and cyber–physical systems, and control to address
               real-world challenges.
             </p>
 

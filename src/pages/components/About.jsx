@@ -74,8 +74,8 @@ const About = () => {
 
               <p className="text-lg text-gray-700 leading-relaxed">
                 Interdisciplinary researcher specializing in the convergence of
-                robotics, quantum computing, machine learning, materials
-                science, computing, chemical engineering, electrical
+                robotics, materials science and engineering, quantum
+                computing, machine learning, chemical engineering, electrical
                 engineering, and biomedical engineering. My research focuses on bridging theoretical
                 foundations with practical applications to address complex
                 real-world challenges through innovative, cross-disciplinary
@@ -94,9 +94,9 @@ const About = () => {
                   "Human–AI Interaction (HRI, HCI), autonomous agents",
                   "Deep Learning, Reinforcement Learning, Lifelong Learning & Natural Language Processing ",
                   "Robotics, Robot Learning & Control Theory",
-                  "Quantum Computing & Quantum Chemistry",
+                  "Quantum Computing",
                   "Complex & Cyber-Physical Systems",
-                  "Materials Science, Chemical & Biomedical Engineering, Computing",
+                  "Materials Science & Engineering, Chemical & Biomedical Engineering, Computing",
                 ].map((item) => (
                   <li key={item} className="flex items-start">
                     <span className="inline-block w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3"></span>
@@ -122,11 +122,18 @@ const About = () => {
                 Beyond Research
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                Beyond my scholarly and professional pursuits, I maintain a deep
-                commitment to reading as a foundational practice of
-                intellectual development. Through sustained engagement with
-                literature and research, I cultivate critical inquiry and
-                interdisciplinary synthesis.
+                Beyond the lab, I conduct ongoing field studies in football (or
+                soccer, depending on which side of the Atlantic I am standing
+                on). The findings remain inconclusive, so the experiments
+                continue every weekend. I am also a keen traveller and treat
+                every excursion as an exploratory study: the data collection is
+                highly subjective and the detours are frequent.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                In the kitchen, I run small-scale experiments in applied
+                chemistry. Not every trial is reproducible, but most of them are
+                edible. And when the experiments are done, a good book keeps the
+                curiosity running and the next hypothesis coming.
               </p>
             </div>
           </div>
