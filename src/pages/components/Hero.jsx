@@ -90,7 +90,7 @@ const Hero = () => {
               <div className="absolute inset-0 rounded-3xl bg-blue-400 opacity-30 blur-3xl -z-10 animate-pulse" />
 
               <div
-                className="w-64 h-64 sm:w-80 sm:h-80 md:w-[24rem] md:h-[24rem] lg:w-[28rem] lg:h-[28rem]
+                className="w-72 h-72 sm:w-[22rem] sm:h-[22rem] md:w-[27rem] md:h-[27rem] lg:w-[32rem] lg:h-[32rem]
                            rounded-full overflow-hidden
                            shadow-2xl shadow-blue-500/20
                            ring-1 ring-gray-200/50

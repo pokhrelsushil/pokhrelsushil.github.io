@@ -60,7 +60,7 @@ const About = () => {
               </h2>
 
               <div className="flex justify-center lg:justify-start">
-                <div className="relative w-full max-w-sm">
+                <div className="relative w-full max-w-md">
                   <div className="absolute inset-0 bg-blue-600 opacity-10 blur-2xl rounded-2xl"></div>
                   <div className="relative rounded-xl overflow-hidden border-2 border-gray-200 shadow-xl">
                     <img
@@ -163,7 +163,7 @@ const About = () => {
                 <XTimeline
                   username="sushilpokhrel"
                   fallback={
-                    <div className="p-4 space-y-6">
+                    <div className="tweet-list p-4 space-y-6">
                       {TWEET_IDS.map((id) => (
                         <TweetBoundary key={id} id={id}>
                           <Tweet id={id} />
@@ -198,6 +198,11 @@ const About = () => {
         .scrollbar-thin::-webkit-scrollbar-thumb {
           background: #9ca3af;
           border-radius: 10px;
+        }
+        /* react-tweet keeps Like/Reply/Copy link on one line; wrap them in the narrow sidebar. */
+        .tweet-list [class*="_actions_"] {
+          flex-wrap: wrap;
+          row-gap: 0.25rem;
         }
       `}</style>
     </section>
