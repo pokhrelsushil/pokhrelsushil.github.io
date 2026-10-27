@@ -100,22 +100,70 @@ const Experience = () => {
     },
   ];
 
-  // ✅ Domain areas directly below Industry Experience
-  const domainAreas = [
-    "AGI safety",
-    "LLM red-teaming",
-    "Model alignment",
-    "Model safety analysis",
-    "Multimodal safety",
-    "Visual commonsense reasoning",
-    "Commonsense reasoning for navigation",
-    "Embodied AI",
-    "Privacy-preserving federated learning",
-    "Social Learning ",
-    "Theory- of -Mind",
-    "Embodied Cognition",
-    "Game Theory",
-    "ETC ETC ",
+  // ✅ Domain areas directly below Industry Experience, grouped by theme
+  const domainAreaGroups = [
+    {
+      title: "AI Safety & Trustworthy ML",
+      areas: [
+        "AGI safety",
+        "LLM red-teaming",
+        "Model alignment",
+        "Model safety analysis",
+        "Multimodal safety",
+        "Privacy-preserving federated learning",
+      ],
+    },
+    {
+      title: "Reasoning & Cognition",
+      areas: [
+        "Visual commonsense reasoning",
+        "Commonsense reasoning for navigation",
+        "Theory of Mind",
+        "Social learning",
+        "Embodied cognition",
+        "Game theory",
+      ],
+    },
+    {
+      title: "Robotics & Control",
+      areas: [
+        "Robotics and embodied AI",
+        "Model Predictive Control (MPC)",
+        "Data-driven modeling and control",
+        "Sparse sensing and sensor optimization",
+      ],
+    },
+    {
+      title: "Scientific ML & Dynamical Systems",
+      areas: [
+        "Scientific Machine Learning (SciML)",
+        "Data-driven dynamical systems",
+        "Nonlinear dynamics and chaos",
+        "System identification (SINDy)",
+        "Koopman operator theory",
+        "Dynamic Mode Decomposition (DMD)",
+        "Reduced-order modeling",
+        "Deep learning for dynamical systems",
+        "Machine learning for physics",
+        "Physics-informed modeling",
+      ],
+    },
+    {
+      title: "Fluids & Aerospace",
+      areas: [
+        "Computational Fluid Dynamics (CFD)",
+        "Fluid mechanics and turbulence",
+        "Aerospace engineering and aerodynamics",
+      ],
+    },
+    {
+      title: "Applied Mathematics & Optimization",
+      areas: [
+        "Applied mathematics and computational science",
+        "Optimization and sparse regression",
+        "Stochastic modeling and uncertainty quantification",
+      ],
+    },
   ];
 
   const teachingAssignments = [
@@ -443,18 +491,27 @@ const Experience = () => {
 
               {/* Domain Areas (immediately below Industry Experience) */}
               <div className="mt-10 bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-5">
                   Domain Areas
                 </h3>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-                  {domainAreas.map((area, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-gray-900 font-bold">•</span>
-                      <span className="text-sm text-gray-900">{area}</span>
-                    </li>
+                <div className="sm:columns-2 gap-x-8">
+                  {domainAreaGroups.map((group) => (
+                    <div key={group.title} className="break-inside-avoid mb-6">
+                      <h4 className="text-sm font-semibold text-blue-700 uppercase tracking-wide mb-2">
+                        {group.title}
+                      </h4>
+                      <ul className="space-y-1.5">
+                        {group.areas.map((area) => (
+                          <li key={area} className="flex items-start gap-3">
+                            <span className="text-gray-900 font-bold">•</span>
+                            <span className="text-sm text-gray-900">{area}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>
